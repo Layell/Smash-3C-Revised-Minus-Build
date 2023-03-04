@@ -1,0 +1,13 @@
+dSmash
+No longer freezes foes outside the final hit
+
+Aerials
+All Aerials now have a x1.5 FSM on their landing lag
+
+Sped up uTilt and dTilt endlag x1.15
+Sped up fTilt endlag by x1.25 on all variants
+
+Giga Boswer Bomb - Added the Jump Cancel Bowser has on the grounded variant
+
+Down Special
+Fixed crash when using Grounded Down Special.

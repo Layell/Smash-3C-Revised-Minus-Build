@@ -1,0 +1,17 @@
+loc_0:
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddycpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddystatusuniqprocessspecialmonkeyflipcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddystatusuniqprocessspecialmonkeyflipstickcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddystatusuniqprocessspecialpopguncpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddystatusuniqprocessspecialbananacpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddystatusuniqprocessspecialbarreljetcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddystatusuniqprocessspecialbarreljetchargecpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddystatusuniqprocessspecialbarreljetjumpcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddystatusuniqprocessspecialbarreljetdamagecpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddystatusuniqprocessspecialsclingcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddystatusuniqprocessspecialsthrowcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddydamagetransactorimplcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "ftdiddystatusuniqprocessfinalcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "wndiddybarrelstatusuniqprocesscpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(115, 1, "wndiddybarreldamagetransactorimplcpp____sinit_")]
+        .4byte 0x00000000

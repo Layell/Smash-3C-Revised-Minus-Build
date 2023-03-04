@@ -1,0 +1,87 @@
+Mario Changelog:
+
+Attributes:
+	-Dash & Run Terminal Velocity increased 1.5 > 1.75
+	-Jumpsquat frames decreased 5 > 4
+	-Maximum Horizontal Air Mobility increased 1.04 > 1.2
+	-Forward Air Landing Lag decreased 26 frames > 19
+	-Down Air Landing Lag decreased 19 frames > 14
+	
+Footstool:
+	-Added the Goomba stomp SFX
+	
+Dash Attack:
+    -Mario now has 12 frames to cancel the dash attack into the additional part
+    -Removed all late hitboxes
+	
+Dash Attack 2:
+    -Mario can now drop off the side of the stage starting on frame 11
+
+Up Tilt:
+	-BKB increased 31 > 40
+
+Forward Smash:
+	-Increased sweetspot hitbox size 6 > 7.75
+	-Sweetspot hitbox moved to better cover the fire GFX
+	-Hitboxes are now active for 5 frames instead of 3
+	
+Up Smash:
+    -BKB decreased 50 > 45
+    -KBG decreased 100 > 95
+	-Increased both hitbox sizes 3.9 > 4.3 & 4 > 4.4
+	
+Down Smash:
+	-Front hitboxes are now active for 4 frames instead of 2
+	-Back hitbox angle changed 90 > 361
+	-Back hitboxes are now active for 4 frames instead of 1
+	
+Neutral Air:
+	-Initial hit damage decreased 13% > 10%
+	-Late hit damage decreased 9% > 7%
+	
+Back Air:
+	-Initial hit angle changed 32 > 361
+	-Initial hit BKB increased 16 > 20
+	-Initial hit KBG increased 90 > 106
+	-Initial hitboxes size increased 4.5 > 5 & 5.9 > 6.2
+	-Late hit KBG increased 80 > 90
+	
+Up Air:
+	-Damage decreased 11 > 9
+	-Hitbox angle changed 45 > 75
+	-BKB increased 9 > 20
+	-IASA moved from frame 30 to frame 23
+	
+Down Air:
+    -Vertical Velocity gained reverted back to 4.2's (0.35 > 0.25)
+    -Multihit SDI multiplier decreased x0.75 > x0.50
+    -Final hitbox lifetime increased 1 frame > 4 frames
+    -Final hitbox KBG decreased 100 > 75
+    -Added a FSM of x1.25 starting frame 5 and ending frame 25
+	
+Standing Grab:
+	-Increased both grabbox sizes 3.36 > 5.5
+	-Moved the grabboxes slightly further away from Mario's body
+	
+Dash Grab:
+	-Grabboxes are now active for 4 frames instead of 2
+	-Grabbox sizes increased 2.5 > 3.5
+	
+Back Throw:
+	-Angle changed 45 > 35
+	
+Down Throw:
+	-Angle reverted 65 > 80
+	
+Neutral Special:
+    -Removed the second fireball
+
+Up Special:
+	-Can now be cancelled with a walljump frame 9 and onwards
+	
+Down Special:
+	-Now requires charging again
+    -All hitboxes except the initial hitboxes were all reduced in size to the same value of 5.5
+    -Initial hitbox sizes were changed to the same size value of 6
+	-Frames to fully charge increased 90 frames > 128
+	-Added a double-jump cancel to the aerial version

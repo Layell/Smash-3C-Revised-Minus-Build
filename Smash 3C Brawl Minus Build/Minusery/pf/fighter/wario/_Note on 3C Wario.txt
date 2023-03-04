@@ -1,0 +1,3 @@
+Wario plumber bones were manually set back to Brawl because I can't be bothered to update the Wario rel. This affects 06  - 11 
+
+- Layell

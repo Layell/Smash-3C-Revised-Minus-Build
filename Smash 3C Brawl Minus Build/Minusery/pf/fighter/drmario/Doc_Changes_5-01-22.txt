@@ -1,0 +1,11 @@
+Doc Changes 5-1-22
+
+
+Neutral Special:
+	-Fixed bug where the SFX for throwing Pill wouldn't play if you held the special button while Defibrilator was charging
+
+Up Special:
+	-Fixed bug where the first hit did not cause flinching (because there was no BKB)
+	-There was a mistake where the angle of the first hit was changed but it was written down as the second hit
+		-Additionally, This change was deemed not necessary, and instead the NEW angle for the first hit is now 75 degrees
+	-Both hits of Up Special now only sends the direction Dr. Mario is facing (this was not mentioned in the previous changelog)

@@ -1,0 +1,59 @@
+Dr. Mario Changelog 4/30/22
+
+
+Attributes:
+	-Shorthop Initial Vertical Velocity increased: 1.4 > 1.75
+	-Double Jump multiplier increased: x0.99 > x1.05
+
+Jab 2:
+	-KBG decreased from: 50 > 35
+
+Jab 3:
+	-Added a Frame Speed Modifier (FSM) of x1.2 to frame 1 of the move
+	-The foot hitbox no longer changes size after frame 9
+	
+Up Tilt:
+	-Hitbox sizes changed: 2.73, 3.52, 4.69 > 4, 4.5, 5.5
+	-BKB increased: 26 > 35
+	
+Forward Air:
+	-Changed the hitbox sfx from StrongBurn to StrongPunch
+	
+Down Air:
+	-Hitlag decreased on both hitboxes: x1.2, x1.3 > x1
+	
+Standing Grab:
+	-Added a grabbox and adjusted the existing grabboxes to better fit it
+	-increased the size of the grabboxes: 2.93  > 3.5
+	-Grabbox lifetime increased: 2 frames > 4 frames
+	
+Dash Grab:
+	-Grabbox lifetime increased: 2 frames > 4 frames
+	
+Pivot Grab:
+	-Grabbox lifetime increased: 2 frames > 4 frames
+	
+Up Throw:
+	-Decreased BKB: 70 > 50
+	
+Up Taunt:
+	-Removed the GFX and SFX since they are for Mario
+	
+Neutral Special:
+	-Fixed flame GFX appearing
+	-Damage increased: 3% > 5%
+	
+Side Special:
+	-Sweetspot no longer hits through shield
+	-Can now grab ledge starting frame 11
+	
+Up Special:
+	-Can now cancel Up Special with walljump starting frame 7
+	-First hit KBG decreased: 100 > 0
+	-Second hitbox angle changed: 90 > 363 (Linking Angle)
+	-Second hit KBG increased: 90 > 110
+	-Second hit angle changed: 50 > 361 (Sakurai Angle)
+	-Second hit hitbox lifetime increased: 2 frames > 5 frames
+	
+Down Air:
+	-Hitlag decreased: x0.85 > x0.50

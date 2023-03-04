@@ -1,0 +1,15 @@
+.module 17
+.section 1
+00000000 muselectcharacteracces__MuSelCharTblAcces_GetTableLen
+00000008 muselectcharacteracces__MuSelCharTblAcces_GetCharKind
+00000034 __entry
+0000007C __exit
+000000C4 __unresolved
+.section 2
+00000000 loc_0
+.section 3
+00000000 loc_0
+.section 4
+00000000 loc_0
+00000048 loc_48
+.section 5

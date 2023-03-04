@@ -1,0 +1,12 @@
+Doc Changes 5-3-22
+
+Attributes:
+	-Meteor Cancel Window increased: 15 > 22
+	-Up Air Landing Lag increased: 8 > 12
+	
+Neutral Special:
+	-Removed small GFX bug that occured when landing within certain frames of the move
+
+Up Special:
+	-Fixed bug where sometimes the GFX didn't appear when landing the second hit
+	-Increased the GFX  that shows up when landing the second hit

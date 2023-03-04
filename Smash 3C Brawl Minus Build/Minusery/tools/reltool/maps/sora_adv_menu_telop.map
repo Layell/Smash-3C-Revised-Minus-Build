@@ -1,0 +1,11 @@
+.section 1
+.module 38
+00000000 muAdvTelopTask__create
+000000d4 muAdvTelopTask____dt
+0000016c muAdvTelopTask__processDefault
+0000049c muAdvTelopTask__isAlive
+000004b8 muAdvTelopTask__kill
+000004d4 muAdvTelopTask__createData
+00000708 moadvmenu___prolog
+00000750 moadvmenu___epilog
+00000798 moadvmenu___unresolved

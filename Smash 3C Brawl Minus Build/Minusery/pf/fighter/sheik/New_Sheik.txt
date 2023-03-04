@@ -1,0 +1,57 @@
+Sheik Rework by Maye
+
+These are just changes that I overheard a few PT want as well as some that I think would round out the character. Like most of the changes I do, this is intended to make her more fun to play against while also keeping her fun to play as.
+
+Thanks,
+Maye
+
+Attributes:
+	-Double Jump Multiplier increased x1 > x1.3
+	-Total Number of Jumps decreased 3 > 2
+	-Forward Air Landing Lag increased 10 > 12
+	-Back Air Landing Lag increased 10 > 12
+	-Up Air Landing Lag decreased 21 > 11
+	-Down Air Landing Lag decreased 26 > 17
+	
+Forward Smash:
+	-Second hit can no longer reverse
+	
+Up Smash:
+	-Tipper hitbox size decreased 5.5 > 4.5
+	-Tipper damage decreased 13% > 11%
+	
+Forward Air:
+	-KBG increased 74 > 85
+	
+Back Air:
+	-Strong hit angle changed 20 > 361
+	-Strong	hit damage decreased 14% > 12%
+	-Weak hit KBG decreased 100 > 80
+	
+Up Air:
+	-Strong hit damage increased 13% > 14%
+	-Strong hit BKB increased 30 > 35
+	-Strong hit duration increased 3 > 6 (frames) 
+	-Weak hit BKB increased 10 > 20
+	
+Back Throw:
+	-Angle changed 112 > 125
+	-Total throw damage increased 7% > 10%
+	
+Forward Throw:
+	-Total throw damage increased 7% > 10%
+	
+Down Throw:
+	-Angle changed 80 > 60
+	-KBG increased 50 > 65
+	-Replaced Attack cancel on frame 43 with an IASA
+
+Neutral Special:
+	-No longer explodes on the ground
+	
+Side Special:
+	-No longer gives Sheik a Vertical or Horizontal boost anymore
+	
+Up Special:
+	-Travel Frames increased 20 > 23
+	-Can now grab ledge during travel

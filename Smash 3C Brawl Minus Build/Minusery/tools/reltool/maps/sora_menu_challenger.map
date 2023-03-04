@@ -1,0 +1,12 @@
+.section 1
+.module 23
+fffffff8 muChallengerApproachTask__create
+0000002c muChallengerApproachTask____ct
+000001a4 muChallengerApproachTask____dt
+000001a4 muChallengerApproachTask__processDefault
+000005b4 muChallengerApproachTask__initialize
+000005d0 muChallengerApproachTask__release
+00000668 muChallengerApproachTask__createData
+000007a0 momenu___prolog
+000007c8 momenu___epilog
+00000810 momenu___unresolved

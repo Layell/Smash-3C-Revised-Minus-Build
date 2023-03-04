@@ -1,0 +1,7 @@
+.section 1
+.module 17
+00000000 muselectcharacteracces__MuSelCharTblAcces_GetTableLen
+00000008 muselectcharacteracces__MuSelCharTblAcces_GetCharKind
+00000034 momenu___prolog
+0000007c momenu___epilog
+000000c4 momenu___unresolved

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<app version="1">
+	<name>Minus Launcher</name>
+	<coder>Minusery Games</coder>
+	<version>v1.0</version>
+<release_date>20200922000000</release_date>
+<short_description>Launcher for Brawl Minus</short_description>
+<long_description>Break The Limits!
+</long_description>
+<ahb_access />
+</app>

@@ -1,0 +1,24 @@
+        .4byte 0x41200000
+        .4byte 0x3F800000
+        .4byte 0x00000000
+        .4byte 0xC0000000
+        .4byte 0x43300000
+        .4byte 0x80000000
+        .4byte 0xBF800000
+        .4byte 0x00000000
+        .4byte 0x00000000
+        .4byte 0x00000000
+        .4byte 0x00000000
+        .4byte 0x3F800000
+        .4byte 0x3C8EFA35
+        .4byte 0x00000000
+        .4byte 0x00000000
+        .4byte 0x00000000
+        .4byte 0x00000000
+        .4byte 0xBF800000
+        .4byte 0x43300000
+        .4byte 0x80000000
+        .4byte 0x00000000         [R_PPC_ADDR32(145, 5, "loc_56F0")]
+        .4byte 0x00008000
+        .4byte 0x3F800000
+        .4byte 0x00000000

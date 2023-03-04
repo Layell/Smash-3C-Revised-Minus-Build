@@ -1,0 +1,6 @@
+0x90    : ft_pichu
+0x91    : ft_roy
+0x92    : ft_mewtwo
+0x94    : ft_waluigi
+0x95    : ft_ridley
+0x96    : ft_drmario

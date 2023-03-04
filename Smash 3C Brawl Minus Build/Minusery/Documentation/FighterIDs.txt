@@ -1,0 +1,6 @@
+0x3F    : Pichu
+0x40    : Roy
+0x41    : Mewtwo
+0x42    : Waluigi
+0x44    : Dr. Mario
+0x50    : Ridley

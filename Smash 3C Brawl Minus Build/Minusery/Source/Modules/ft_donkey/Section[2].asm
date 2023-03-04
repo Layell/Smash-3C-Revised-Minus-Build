@@ -1,0 +1,17 @@
+loc_0:
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeycpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocessspecialscpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocessspecialhicpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocessspeciallwloopcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocessfinalcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocessfinalloopcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocessfinalendcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocessitemliftcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocesscatchwaitcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocesssuperliftcommoncpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocesssuperliftwalkcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocessshouldercommoncpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocessshoulderstartcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocessshoulderwalkcpp____sinit_")]
+        .4byte 0x00000000         [R_PPC_ADDR32(92, 1, "ftdonkeystatusuniqprocessthrowcommoncpp____sinit_")]
+        .4byte 0x00000000

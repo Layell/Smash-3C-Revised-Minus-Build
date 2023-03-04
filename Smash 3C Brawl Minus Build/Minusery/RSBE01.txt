@@ -1,0 +1,2337 @@
+##################################################################################
+# Brawl Minus RSBE01.txt                                                         #
+#                                                                                #
+# Requires GCTRealMate and the source folder provided to assemble the GCT!       #
+#                                                                                #
+# GCTconvert codes are compatible, if you want to add your own codes, go         #
+# into Source/codes/Extra/More.asm to add additional codes!                      #
+# If you wish to keep your new codes organized, you can also summon              #
+# separate text files by using .include Source/codes/<filename> within more.asm, #
+# or simply add them to there, directly. To disable one, simply place an         #
+# exclamation point in front of the name of that code! Enjoy Brawl Minus!!       #
+##################################################################################
+
+#############################################################################
+######################          Backend Codes          ######################
+#############################################################################
+
+#############################################################################
+AXNextFrame -> VBI Hook Switch After Strap Screen v1.1 [Magus, Sammi-Husky]
+#############################################################################
+* 20200984 4BE00F24
+* 20497ED0 00000001
+* 06001198 00000010
+* 38C7004C 7CE33B78
+* 38870034 38A70038
+* 04002778 80023D5C
+* 041E9A2C 4BE17E7C
+* 04200984 4E800020
+* C0000000 00000004
+* 3C608020 60630984
+* 7C001FAC 3C60801E
+* 60639A2C 7C001FAC
+* 4C00012C 4E800020
+* E2000002 00000000
+
+##################################################
+Boot Directly to CSS v5.1  (Hold Shield for training) [PyotrLuzhin, SammiHusky]
+##################################################
+HOOK @ $806DD5F8
+{
+    li r11, 0
+    LOOP_START:
+        lis r12, 0x805B
+        ori r12, r12, 0xa684
+        
+    GAMECUBE:
+        mulli r4, r11, 0x40
+        lwzx r0, r12, r4
+        rlwinm. r0, r0, 0, 25, 26
+        bne boot_training
+        
+    WIIMOTE_CHECK_SUBTYPE:
+        addi r12, r12, 0x100
+        lwz r4, 0x3c(r12)
+        cmpwi r4, 3
+        beq WIICHUCK
+        mulli r4, r11, 0x40
+        lwzx r0, r12, r4
+        rlwinm. r0, r0, 0, 25, 26
+        bne boot_training
+        b LOOP_BACK
+    WIICHUCK:
+        mulli r4, r11, 0x40
+        lwzx r0, r12, r4
+        rlwinm. r0, r0, 0, 27, 27
+        bne boot_training
+    LOOP_BACK:
+        addi r11, r11, 1
+        cmpwi r11, 4
+        blt LOOP_START
+    
+    boot_vs:
+        addi r4, r21, 0x1B54
+        li r5, 0
+        b %END%
+        
+    boot_training:
+        addi r4, r20, -0x3f0
+        li r5, 0
+}
+HOOK @ $8002D3A0
+{
+  mr r4, r27
+  lis r5, 0x8042;    ori r5, r5, 0xA40
+  cmpw r4, r5;        bne- %END%
+  li r5, 0x3
+  stb r5, 0x2A5(r28);    stb r5, 0x2B1(r28)
+  li r30, 0x0
+}
+op b 0x10 @ $80078E14
+op nop    @ $806DD5FC
+
+#############################################################################
+Reset multipac stage lock status between Classic & All-Star matches [wiiztec]
+#############################################################################
+HOOK @ $80044A34
+{
+    lwz r4, 0x8(r3)
+    cmpwi r8, 0x1
+    bne- %END%
+    lis r12, 0x8059
+    stw r15, -0x7D08(r12)
+}
+
+###########################################################
+Stock/Frame Control not disabled in 300% Mode 1.1 [wiiztec]
+###########################################################
+op li r0, 0     @ $806A5C94
+op NOP        @ $806844DC
+
+######################
+Disable Custom Stages
+######################
+* 046B841C 48000040
+
+#########################
+3D Characters on Hanenbow
+#########################
+* 046CF700 48000014
+
+####################################
+Special Mode flags clear [wiiztec]
+####################################
+* 2156369C 41517A00
+* 42000000 90000000
+* 0217F378 00030000
+* E0000000 80008000
+
+#################################################
+Poke Balls use Normal Item Limit [standardtoaster]
+#################################################
+op NOP @ $809B0AC0
+
+##################################################
+Memory Extention for FighterXResource2 [Dantarion]
+##################################################
+int 0x91E80 @ $80421B54
+int 0x91E80 @ $80421B74
+int 0x91E80 @ $80421B94
+int 0x91E80 @ $80421BB4
+int 0x91E80 @ $80421E1C
+int 0x91E80 @ $80421E3C
+int 0x91E80 @ $80421EBC
+int 0x91E80 @ $80421EDC
+
+#################################################
+Memory Extension for CommonResource [Sammi-Husky]
+#################################################
+int 0x24CCCC @ $80494A00
+
+##############################
+Stage Choice Random Fix [ds22]
+##############################
+op bge- 0x14C     @ $80055444
+
+#######################################
+Ragequit Accelerator [InternetExplorer]
+#######################################
+op NOP         @ $800F15D8
+
+###########################################################################################################
+Sudden Death Port Fix (Requires Analog C-Stick, L R, & Light-Shield Button Stored as Variables v2.1) [ds22]
+###########################################################################################################
+op lwz r0, 0x44(r3)     @ $8081AD08
+op cmplwi r0, 0        @ $8081AD0C
+op beq- 0x30        @ $8081AD10
+
+
+######################################################
+1 Player Matches in Time Mode only [InternetExplorer]
+######################################################
+* C268D420 00000007
+* 2C060000 4181000C
+* 39000001 48000020
+* 2C060002 40800014
+* 3D009017 6108F360
+* 89080002 48000008
+* 39000000 2C080000
+* 60000000 00000000
+* 0468D424 41820024
+
+############################
+1 Team Matches [spunit262]
+############################
+* 0468D534 38600000
+
+#####################################
+Online Handicap Disable [spunit262]
+#####################################
+* 046F3DA4 60000000
+
+#####################################
+Training Room Item Fix [ds22]
+#####################################
+* 046D1704 60000000
+
+################
+Infinite Replays
+################
+* 040E5DE8 60000000
+* 04953184 60000000
+* 04953224 60000000
+
+###################################################
+Allow Pausing When Set to Off v3 [standardtoaster]
+###################################################
+HOOK @ $800505C8
+{
+  mfcr r12
+  lis r4, 0x8058; ori r4, r4, 0x4084
+  cmpwi r3, 0x0;  bne- loc_0x18
+  li r3, 0x2
+loc_0x18:
+  stw r3, 0(r4)
+  li r4, 0x8
+  mtcr r12
+}
+
+##################################################
+Match Loss Clears Pause Address [standardtoaster]
+##################################################
+HOOK @ $808363AC
+{
+  lis r4, 0x8058
+  ori r4, r4, 0x4084
+  li r12, 0x0
+  stw r12, 0(r4)
+  li r4, 0x110
+}
+
+#################################################
+Match Win Clears Pause Address [standardtoaster]
+#################################################
+HOOK @ $8083634C
+{
+  lis r10, 0x8058
+  ori r10, r10, 0x4084
+  li r4, 0x0
+  stw r4, 0(r10)
+  mr r5, r31
+}
+
+###############################################################
+Pause Set to Off -> Hold Start to Pause v2 [standardtoaster]
+###############################################################
+* C21E6D24 0000000C
+* 3D608058 616B4080
+* 818B0004 2C0C0002
+* 40820048 3D808049
+* 618C55BC 818C0000
+* 2C0C0000 4182002C
+* 540C00C7 41820024
+* 7D8B202E 2C0C0032
+* 40800020 398C0001
+* 7D8B212E 3D801000
+* 7C0C0050 4800000C
+* 39800000 7D8B212E
+* 901E0000 00000000
+
+#############################################
+Allow 2x Speed Setting in Training [Magus]
+#############################################
+* 041058C8 2C1E0006
+* 041058E4 3BC00005
+* 049629E8 40800008
+* C29629F4 00000002
+* 3860005A 41820008
+* 38600078 00000000
+
+#########################
+Unrestricted Pause Camera
+#########################
+op blr         @ $800A7D60
+op li r4, 1    @ $80109D88
+
+##########################
+Unrestricted Replay Camera
+##########################
+op NOP         @ $8009E934
+op NOP         @ $8009E93C
+op fmr f1, f3    @ $8009E9AC
+op fmr f3, f0    @ $8009E9B8
+op fmr f0, f1    @ $8009E9BC
+op fmr f0, f3    @ $8009E9C8
+
+########################################################
+Default Settings Modifier [Igglyboo, Brkirch, and FMK]
+########################################################
+#4 Stocks, 8 Minutes
+* 24494A98 80000000
+* 20523300 00000000
+* 04523300 DEADBEEF
+* 42000000 90000000
+* 0417F360 00000102
+* 0417F364 04020A00
+* 0417F368 08010101
+* 0417F36C 01000000
+* E0000000 80008000
+
+#################################################
+[Legacy TE] Disable Challenger Approaches [ds22]
+#################################################
+op stw r24, 8(r15) @ $806F5D58
+
+###################################################################
+[Legacy TE] CPUs can attack each other in Training Mode [Fracture]
+###################################################################
+HOOK @ $806F1984
+{
+    lbz r3, 0xA(r29);
+    ori r3, r3, 1
+    stb r3, 0xA(r29);
+}
+
+################################################################
+[Legacy TE] Set the number of CPUs to 0 in Training Mode [Sarrg]
+################################################################
+op li r31, 0     @ $80105AC8
+op cmpwi r31, 0    @ $80105AD8
+
+
+###############################################
+[Legacy TE] Target Smash levels fix [DukeItOut]
+###############################################
+HOOK @ $8010F984
+{
+      cmplwi r3, 0x33
+      ble+ multiplayer
+      cmplwi r3, 0x39
+      blt- singleplayer
+multiplayer:
+      li r29, 0x0    //only forces reset of stages for stable endless friendlies 
+    stw r29, 0(r4)    //if actually a multiplayer-stage by design
+singleplayer:
+      cmpwi r6, 0x0
+}
+
+###########################################################################
+Load Common2.pac from the SD card [DukeItOut, Minus path by KingJigglypuff]
+###########################################################################
+* C201BF2C 00000010
+* 80630000 48000005
+* 7C8802A6 3884005F
+* 7C6C1B78 3CA0803F
+* 60A5A3FC 7CA903A6
+* 4E800421 2C030000
+* 7D836378 40A20050
+* 3884FFDE 3CA0803F
+* 60A5A280 7CA903A6
+* 4E800421 3C808063
+* 3CA08001 60A5BF2C
+* 90850000 48000028
+* 73643A2F 4D696E75
+* 73657279 2F70662F
+* 73797374 656D2F63
+* 6F6D6D6F 6E322E70
+* 61630000 00000000
+
+############################################################
+[Legacy TE] Always use PACs instead of PCS files [DukeItOut]
+############################################################
+op NOP @ $8084CB40
+
+##########################################################################################################################
+[Legacy TE] Display Stack Trace, Instruction, and Address Upon Crashing [UnclePunch, Fracture] (internal crash fix by Eon)
+##########################################################################################################################
+HOOK @ $801D84C8
+{
+  mflr r0
+  stw r0, 4(r1)
+  stwu r1, -1280(r1)
+  addi r29, r1, 0x8
+  mr r3, r29
+  addi r4, r28, 0x174
+  crclr 6, 6
+  lis r12, 0x803F
+  ori r12, r12, 0x89FC
+  mtctr r12
+  bctrl 
+  add r29, r29, r3
+  lwz r25, 4(r30)
+  li r26, 0x0
+  b checkValidPointer
+
+printStackTrace:
+loc_0x3C:
+  lwz r6, 0(r25)
+  mr r5, r25
+  lwz r7, 4(r25)
+  addi r4, r28, 0x19C
+  mr r3, r29
+  crclr 6, 6
+  lis r12, 0x803F
+  ori r12, r12, 0x89FC
+  mtctr r12
+  bctrl 
+  add r29, r29, r3
+  lwz r25, 0(r25)
+
+checkValidPointer:
+  lis r0, 0x8000
+  cmplw r25, r0
+  blt printInstructionCrash
+
+  lis r0, 0x8180
+  cmplw r25, r0
+  blt cont
+
+  lis r0, 0x9000
+  cmplw r25, r0
+  blt printInstructionCrash
+
+  lis r0, 0x9400
+  cmplw r25, r0
+  bge printInstructionCrash
+
+cont:
+#check Has Printed 6 lines
+  cmplwi r26, 6
+  addi r26, r26, 0x1
+  blt+ printStackTrace
+
+printInstructionCrash:
+  mr r3, r29
+  lis r4, 0x8046
+  ori r4, r4, 0x77D8
+  lwz r5, 408(r30)
+  word 0x7CD302A6         #`mfdar r6` not supported by gctrm
+  lis r12, 0x803F
+  ori r12, r12, 0x89FC
+  mtctr r12
+  bctrl 
+  subi r3, r13, 0x592C
+  subi r4, r13, 0x5924
+  addi r5, r1, 0x8
+  lis r12, 0x801D
+  ori r12, r12, 0xB7E8
+  mtctr r12
+  bctrl 
+}
+op li r7, 0 @ $801dbf60
+op li r8, 0 @ $801dbf68
+
+##########################################################################################################
+Effect.pac Roster Expansion System (RSBE.Ver) V2 (Costume-Specific Etc File Support) [JOJI, DukeItOut]
+##########################################################################################################
+* E0000000 80008000
+* 0405EAD0 3800000B
+* 04451A88 8059DAB8
+* 04451A8C 80452C54
+* 04451A90 80452C64
+* 04416F7C 80416F70
+* 06416F60 00000006
+* 63757374 6F6D0000
+* C205EFCC 0000001F
+* 3BFF0004 281B0137
+* 418000E8 3FE08041
+* 3BFF6F7C 281B02B7
+* 41820048 281B0277
+* 41820034 281B0237
+* 41820020 281B0137
+* 40820058 389FFFE4
+* 80640000 907FFFF4
+* A0640004 48000034
+* 3C808059 6084D734
+* 48000018 3C808059
+* 6084D6F4 4800000C
+* 3C808059 6084D638
+* 80640000 907FFFF4
+* A0640004 60630058
+* B07FFFF8 38000000
+* 901FFFFC 48000010
+* 809FFFFC 38840001
+* 909FFFFC 889FFFFF
+* 2C1B0237 4180001C
+* 3860000A 7C041840
+* 41800010 38630010
+* 38840006 4BFFFFF0
+* 7C802378 7004000F
+* 2804000A 38840030
+* 41800008 38840007
+* 989FFFFB 700400F0
+* 5484E13E 2804000A
+* 38840030 41800008
+* 38840007 989FFFFA
+* 60000000 00000000
+* 0405EFD0 2C1B02F7
+* 0405F01C 2C0302F7
+* 0405F0A8 2C0302F7
+* 04061200 28040A8D
+* C2061218 00000007
+* 7C84482E 28150087
+* 4180002C 38800028
+* 2815008D 41800020
+* 38800137 38D5FF73
+* 2806000A 41800010
+* 38C6FFF6 38840001
+* 4BFFFFF0 00000000
+* 06416F80 00000011
+* 54657852 6F795377
+* 6F726454 72616365
+* 30000000 00000000
+* 06416FA0 00000009
+* 54657843 7573746F
+* 6D000000 00000000
+* 06416FAB 00000006
+* 54726163 65300000
+* C2061278 00000015
+* 7C84482E 28150087
+* 4180009C 3C808041
+* 38846F80 90640014
+* 38B5FF79 38650030
+* 98640011 80640014
+* 2815008D 41800078
+* 38B5FF73 90C40018
+* 90E40034 38840020
+* 38C00000 38600000
+* 2805000A 41800010
+* 38A5FFF6 38C60001
+* 4BFFFFF0 70C7000F
+* 2807000A 41800008
+* 38E70007 38E70030
+* 98E4000A 70C700F0
+* 54E7E13E 2807000A
+* 41800008 38E70007
+* 38E70030 98E40009
+* 38650030 98640011
+* 8064FFF4 80C4FFF8
+* 80E40014 00000000
+* E0000000 80008000
+
+
+#######################################################################
+[Project+] Turbo item does not fire curry shots in any mode [DukeItOut]
+#######################################################################
+half 0x4800 @ $8083A0A0
+
+####################################################
+[Project+] Stickers do not randomly drop [DukeItOut]
+####################################################
+op b 0x140 @ $809B4BAC
+
+##########################################################################################################
+[Project+] Item Frequency None if all items turned off and Items spoofed off if item frequency None  [Eon]
+##########################################################################################################
+#If all items turned off, save Item frequency as None
+HOOK @ $806aa9bc
+{
+    cmpwi r27, 0
+    bne end
+    cmpw r28, r0
+    bne end
+    li r29, 0
+end:
+    stb r29, 0(r3)
+}
+#If Item Frequency None, pretend all items are turned off
+
+#ScMelee
+HOOK @ $806dcf58
+{
+    lbz r0, 0x0(r25)
+    cmpwi r0, 0
+    bne %end%
+    stw r0, 0x34(r31)
+    stw r0, 0x30(r31)
+}
+#SpMelee
+HOOK @ $806def74
+{
+    lbz r0, 0x0(r29)
+    cmpwi r0, 0
+    bne %end%
+    stw r0, 0x34(r27)
+    stw r0, 0x30(r27)
+}
+
+#####################################################################################################
+[Project+] Disable Smash Balls during Classic's Team <Character> Battles [DukeItOut]
+#
+# This is needed due to a crash relating to swapping characters in and out 
+# This code can likely be removed in the future if a way to expand the memory allocation of the 
+# decompression buffer without adversely affecting other parts of the game is made possible.
+#
+# Note that this does not cover All-Star Vs. so that people can use the first costume for characters
+# with Smash Balls in that mode, but the crash will occur if using other skins for the same reasoning
+# that it does in Classic's team horde battles!
+#####################################################################################################
+HOOK @ $809AE4E0
+{
+    subi r0, r3, 1    # Original operation, ticks down the timer for when smash balls can be available
+    # however, if set to -1, Smash Balls won't appear for the rest of the match (value normally used when a Smash Ball is present)
+    lis r12, 0x805B            # \
+    lwz r12, 0x50AC(r12)    # | Retrieve the game mode name
+    lwz r12, 0x10(r12)        # |
+    lwz r12, 0x0(r12)        # /
+    lis r6, 0x8070; ori r6, r6, 0x24D0    # \ Only trigger for Classic mode!
+    cmpw r6, r12; bne+ %END%            # /
+isClassic:
+    lis r12, 0x90FF
+    lwz r12, 0x50F4(r12)
+    cmpwi r12, 0; beq+ %END%        # Don't read this if it is empty!
+    lwz r4, 0x1C8(r12)                # Amount in the team
+    cmpwi r4, 10; bne+ %END%        # Verify that there are ten members, this amount doesn't change in teams regardless of difficulty
+    lwz r4, 0x1C4(r12)                # Amount in the team KO'd
+    cmpwi r4, 10; beq+ %END%        # If 10 members have been KO'd, this round is over and the info is retained into non-team rounds as a leftover
+forceDisable:    
+    li r0, -1
+}        
+
+#####################################################
+Subspace uses same Internal Constants as Versus [Eon]
+#####################################################
+word 0x0 @ $80B868D8
+
+########################################
+Unrestricted Control Editing [spunit262]
+########################################
+* 211973CC 7CC6F82E
+* 051973CC 38C20060
+* 05197468 38620060
+* 05197574 38820060
+* 05197680 38E20060
+* 051976B4 38620060
+* 051978CC 38E20060
+* 065A9380 0000000A
+* 00010203 04050A0B
+* 0C0D0000 00000000
+* E0000000 80008000
+
+
+.include Source/codes/ProjectM/ButtonPresses.asm
+.include Source/codes/ProjectM/CloneEngine.asm
+.include Source/codes/ProjectM/CustomAI.asm
+.include Source/codes/ProjectM/Events.asm
+.include Source/codes/ProjectM/Handicap.asm
+
+.include Source/codes/ProjectM/SpecialModes/AllStarVs.asm
+.include Source/codes/ProjectM/SpecialModes/RandomElement.asm
+.include Source/codes/ProjectM/SpecialModes/Rules.asm
+.include Source/codes/ProjectM/SpecialModes/Stamina.asm
+.include Source/codes/ProjectM/SpecialModes/Turbo.asm
+#.include Source/codes/ProjectM/SpecialModes/Zero2Death.asm
+
+.include Source/codes/LegacyTE/CPU.asm
+.include Source/codes/LegacyTE/LoadFlags.asm
+.include Source/codes/LegacyTE/UnboundedTeamEngine.asm
+
+.include Source/codes/Project+/Articles.asm
+#.include Source/codes/Project+/Boss.asm
+#.include Source/codes/Project+/CodeMenu.asm
+.include Source/codes/Project+/CompressPAC.asm
+.include Source/codes/Project+/FilePatchCode.asm
+.include Source/codes/Project+/IndependentSub.asm
+.include Source/codes/Project+/Memory.asm
+.include Source/codes/Project+/TrainingMode.asm
+#.include Source/codes/Project+/VictoryCamera.asm
+
+#############################################################################
+######################          Engine Codes          #######################
+#############################################################################
+
+#############################################################
+Bit Variables Beyond 255 and Negative Offset Variables [Magus]
+#############################################################
+* C27AC9E4 00000003
+* 548C0211 5484027E
+* 41A20008 7C8400D0
+* 60000000 00000000
+* C27ACA04 00000003
+* 54AC0211 54A5027E
+* 41A20008 7CA500D0
+* 60000000 00000000
+* C27ACB78 00000003
+* 54AC0211 54A5027E
+* 41A20008 7CA500D0
+* 60000000 00000000
+* C27ACB98 00000003
+* 54AC0211 54A5027E
+* 41A20008 7CA500D0
+* 60000000 00000000
+* C27ACAA0 00000003
+* 548C0211 5484027E
+* 41A20008 7C8400D0
+* 60000000 00000000
+* C27ACAC0 00000003
+* 548C0211 5484027E
+* 41A20008 7C8400D0
+* 60000000 00000000
+* C27AD114 00000003
+* 57CC0211 57C5027E
+* 41A20008 7CA500D0
+* 60000000 00000000
+* C27AD15C 00000003
+* 57CC0211 57C5027E
+* 41A20008 7CA500D0
+* 60000000 00000000
+* C27ACBB8 00000003
+* 548C0211 5484027E
+* 41A20008 7C8400D0
+* 60000000 00000000
+* C27ACBD8 00000003
+* 548C0211 5484027E
+* 41A20008 7C8400D0
+* 60000000 00000000
+* C27ACCA0 00000003
+* 548C0211 5484027E
+* 41A20008 7C8400D0
+* 60000000 00000000
+* C27ACCC0 00000003
+* 548C0211 5484027E
+* 41A20008 7C8400D0
+* 60000000 00000000
+* C27AD528 00000003
+* 57CC0211 57C4027E
+* 41A20008 7C8400D0
+* 60000000 00000000
+* C27AD570 00000003
+* 57CC0211 57C4027E
+* 41A20008 7C8400D0
+* 60000000 00000000
+* C27ACCEC 00000003
+* 5480027E 7C002E70
+* 548C0211 41A20008
+* 7C0000D0 00000000
+* 047ACCF8 60000000
+* C27ACD20 00000003
+* 5480027E 7C002E70
+* 548C0211 41A20008
+* 7C0000D0 00000000
+* 047ACD2C 60000000
+* C27ACD54 00000003
+* 5480027E 7C002E70
+* 548C0211 41A20008
+* 7C0000D0 00000000
+* 047ACD60 60000000
+
+#############################################
+!Multiply Frame Speed Modifier Command [Magus]
+#############################################
+HOOK @ $80724820
+{
+  cmpwi r31, 0x2
+  bne+ loc_0x10
+  lfs f1, 76(r24)
+  fmuls f30, f1, f30
+loc_0x10:
+  fmr f1, f30
+}
+
+##########################################################################
+Powershield Window Doesn't Decrement in Hitlag or 2x Rate in Guard [Magus]
+##########################################################################
+op b 0x20     @ $80875164
+int 0x20000    @ $80FC2230
+
+####################################################
+No Air Dodge in tumble [spunit262, Phantom Wings]
+####################################################
+* C2781310 00000006
+* 80980000 2C040021
+* 40A20020 8097007C
+* 80840034 2C040042
+* 41A00010 2C040049
+* 41A10008 38600000
+* 39610040 00000000
+
+################################################
+Momentum Capture V4.3 [Phantom Wings, spunit262]
+################################################
+* C28669D8 00000013
+* 3C008180 809D0008
+* 8084FFFC 7C040000
+* 4080000C 80840030
+* 48000008 3880FFFF
+* 807D007C A0E30006
+* 80630038 2C03000B
+* 40A20044 3C004540
+* 901B000C C05B000C
+* 38A2FE5C 84C50004
+* 7CC0C671 4180000C
+* 7C002000 4082FFF0
+* 54C0027E 6C004540
+* 901B000C C01B000C
+* FC001028 C03B0008
+* FC210032 2C030022
+* 41800014 2C04002F
+* 40A20010 2C070112
+* 41A00008 D03B0008
+* 60000000 00000000
+* C277F794 00000002
+* 801E0034 B01E0006
+* 801E0048 00000000
+
+###############################################################################################
+!Reset Variables on Action Changes & RCO Lag Fix v1.1c [standardtoaster, ds22, Magus, DukeItOut]
+###############################################################################################
+HOOK @ $8077F780
+{
+  lwz r10, 0x70(r31)    # \
+  lwz r10, 0x20(r10)    # |
+  lwz r10, 0x0C(r10)    # | Access character ID
+  lwz r10, 0x2D0(r10)    # |
+  lis r7, 0x8000    #\|
+  cmplw r10, r7        #||
+  blt+ loc_0xA4        #||
+  lis r7, 0x81B0    #||Verify that this is a character
+  cmplw r10, r7        #||
+  bge+ loc_0xA4        #/|
+  lwz r10, 0x08(r10)    # |
+  lis r7, 0x8100    #\|
+  cmplw r10, r7        #|| Don't let SSE enemies trigger this!
+  blt loc_0xA4        #||
+  lis r7, 0x8140    #||
+  cmplw r10, r7        #||
+  bge loc_0xA4        #/|
+  lwz r10, 0x110(r10)    # / 
+  cmpwi r10, 0x80    
+  bge- loc_0xA4        
+  lwz r10, 0x1C(r31)    
+  lwz r10, 0x28(r10)    
+  lis r7, 0x8180    
+  cmpw r10, r7
+  bge- loc_0xA4        # Some tether entities are treated as separate???
+  lwz r10, 0x10(r10)
+  lbz r7,  0x08(r10)
+  lwz r10, 0x70(r31)
+  lwz r10, 0x20(r10)
+  lwz r9,  0x0C(r10)
+  lwz r8,  0x14(r10)
+  li r6, 0x0
+  cmpwi r28, 0x19;  beq- loc_0x78
+  cmpwi r28, 0xE;  blt- loc_0x6C
+  cmpwi r28, 0x10;  ble- loc_0x78
+  cmpwi r28, 0x112;  blt+ loc_0x6C
+  cmpwi r28, 0x115;  ble- loc_0x74
+
+loc_0x6C:
+  cmpwi r7, 0x1
+  bne- loc_0x78
+
+loc_0x74:
+  stw r6, 0(r8)
+
+loc_0x78:
+  cmpwi r7, 0x1;  beq+ loc_0xA0
+  cmpwi r28, 0xBD;  bne+ loc_0x90
+  stw r6, 324(r9)
+  b loc_0xA0
+
+loc_0x90:
+  cmpwi r28, 0x43;  blt+ loc_0xA4
+  cmpwi r28, 0x45;  bgt+ loc_0xA4
+
+loc_0xA0:
+  stw r6, 316(r9)
+
+loc_0xA4:
+  stw r28, 56(r30)
+}
+# -Ledgegrab Count (LABa[79]), AGT Count (LABa[81]), Landing Lag Mod (LAFl[0])
+
+############################################
+!Base Tripping Rate on Action 43 is 0 [Magus]
+############################################
+float 0.0 @ $80B883D4
+float 0.0 @ $80B883D8 
+
+##########################################
+Tripping Rate is 0 V2 [ds22, KirbyIsCool]
+##########################################
+* 0489E910 FFE0F090
+
+#############################################################################
+Action 0x45 (hitstun) deadweight 'bump' angle 0x169 -> 0x16D [standardtoaster]
+#############################################################################
+* 04FA9370 0000016D
+* 04FA92F8 0000016D
+
+##################################################
+Shield Break Minimum Disabled Time Fix [Magus]
+##################################################
+* C2875D40 00000003
+* FC1F0840 40A00008
+* FFE00890 FC010840
+* 60000000 00000000
+
+###########################################
+Powershield Reflect Sets Variable [Magus]
+###########################################
+* C2840820 0000000D
+* 3D808180 80830060
+* 7C046000 40800050
+* 80A4007C 7C056000
+* 40800044 A0A50036
+* 2C05001A 41800038
+* 2C05001D 41810030
+* 80C40070 7C066000
+* 40800024 80C60024
+* 7C066000 40800018
+* 80C6001C 7C066000
+* 4080000C 38E00004
+* 98E60002 80630060
+* 60000000 00000000
+
+################################################
+!GuardOn Animations Allow In Transition [Magus]
+################################################
+* C2874B34 00000006
+* 819B007C A18C0036
+* 2C0C001A 40A20018
+* 819B0014 818C0040
+* 3D604080 7C0C5800
+* 41800008 4E800421
+* 60000000 00000000
+
+#####################
+Momentum Capture Data
+#####################
+* 065A9180 00000038
+* 0600119A 09000CCD
+* 0A001000 0E0014CD
+* 0F001400 11001000
+* 12001000 17001333
+* 18001666 1A001266
+* 20001000 21001000
+* 2F001CCD FF001000
+
+##################################################
+Triple Jump Glitch Fix [Phantom Wings, spunit262]
+##################################################
+* 04858DCC 38830003
+
+################################################
+[Project+] Character Ledge Unsnap fix [Fracture]
+################################################
+int 0x20000 @ $80FC2AB0
+int 0x20000 @ $80FC2AB8
+
+###############################################################################################################
+[Project+] Customizable Attacker Hitlag Modifier [DukeItOut]
+#
+# Place value 48495421 into RA-Basic[10] to eliminate hitlag for the attacker
+# Place value 48495478 into RA-Basic[10] to make the scalar in RA-Basic[12] be an additional multiplier
+#     for the attacker's hitlag
+# Place value 6869743A into RA-Basic[10] to make the value in RA-Basic[12] be the attacker's hitlag
+###############################################################################################################
+HOOK @ $8083FFBC
+{
+    lwz r3, 0x60(r3)        # Original operation
+    lwz r6, 0x70(r3)        # \
+    lwz r6, 0x24(r6)        # | Access RA-Basics
+    lwz r6, 0xC(r6)            # / 
+    lwz r5, 40(r6)            # We want RA-Basic[10]     (10*4 = 40)
+    lis r12, 0x4849            # \ "HIT!" (48495421)
+    ori r12, r12, 0x5421        # /
+    cmpw r5, r12            # If that's what the ASCII in RA-Basic[10] says . . . .
+    beq- NoHitlag            # Then there will be no hitlag!
+    lis r12, 0x4849            # \ "HITx" (48495478)
+    ori r12, r12, 0x5478        # /
+    cmpw r5, r12
+    beq- MultiplyHitlag
+    lis r12, 0x6869            # \ "hit:" (6869743A)
+    ori r12, r12, 0x743A        # /
+    cmpw r5, r12
+    bne+ %END%
+SetHitlag:
+    lwz r4, 48(r6)            # Access RA-Basic[12] (12*4 = 48)
+    b ModifiedHitlag
+MultiplyHitlag:
+    lwz r5, 48(r6)            # \ Access RA-Basic[12] (12*4 = 48)
+    mullw r4, r4, r5        # / and multiply the current hitlag by it
+    li r5, 0            # \
+    ori r5, r5, 60000        # | Scalars are really just ints * 60000            
+    divw r4, r4, r5            # / Convert back into an int!
+ModifiedHitlag:
+    cmpw r4, 0            # \
+    bge- %END%            # / Safety to prevent people trying to force negative hitlag
+NoHitlag:
+    li r4, 0            # No frames of hitlag!
+}
+
+
+############################################################
+Knockback during Timer Slo-mo is also slowed down v2.0 [Eon]
+############################################################
+#Multiply Knockback Decay Rate by current Timer-speed
+HOOK @ $80869c10
+{
+  fmr f30, f1
+
+  #this.slowModule.getRate()
+  lwz r3, 0xD8(r30)
+  lwz r3, 0xB8(r3)
+  lwz r12, 0x8(r3)
+  lwz r12, 0x3C(r12)
+  mtctr r12
+  bctrl 
+
+  fmuls f1, f1, f30 
+  lfs f2, 0x4(r31)
+
+}
+
+#moves knockback to be multiplied by timer, instead of excluded from the calculation
+#knockback is movement ID 2, so changing bitmasks appropriately adds it to normal movement types
+op li r29, 3 @ $8070f0ac #was 1, added 2 to the bitmask 
+op li r30, -12 @ $8070f0d8 #was -10, added 2 to the bitmask 
+
+
+#if isSkip, dont decrement hitstun 
+HOOK @ $80838960
+{
+  #this.slowModule.isSkip()
+  lwz r3, 0xD8(r31)
+  lwz r3, 0xB8(r3)
+  lwz r12, 0x8(r3)
+  lwz r12, 0x40(r12)
+  mtctr r12
+  bctrl 
+  cmpwi r3, 1
+  bne cont
+  lis r12, 0x8083
+  ori r12, r12, 0x8A14
+  mtctr r12
+  bctr 
+cont:
+  lwz r3, 0xD8(r31)
+}
+
+##############################################
+Slow-mo timer Continues even when Linked [Eon]
+##############################################
+HOOK @ $80766B80 
+{
+  bctrl
+  lwz r3, 0x28(r31)
+  cmpwi r3, 0
+  ble skip 
+  subic. r0, r3, 1
+  stw r0, 0x28(r31)
+  bgt skip 
+  li r4, 1
+  stw r0, 0x34(r31)
+  stw r0, 0x24(r31)
+skip:
+  li r3, 1
+}
+
+#########################################################
+[Project+] Throws Don't Trip on Grounded Banana 2.0 [Eon]
+#########################################################
+HOOK @ $8076CEB0
+{
+  li r24, 9
+  lwz r3, 0x7C(r18)
+  lhz r3, 0x3A(r3)
+  cmpwi r3, 0x3C
+  bne %end%
+  lis r3, 0x8076
+  ori r3, r3, 0xd61c
+  mtctr r3
+  bctr
+}
+
+##################################################################################
+[Project+] Floating Point Imprecision compensation for Collision tests v1.1 [Eon]
+##################################################################################
+#ECB-Model split at Edge Fix for stationary plats
+op ble 0x280 @ $80125430 
+
+#########################################################
+[Project+] Faux Super Armour Port Priority Fix v1.1 [Eon]
+#########################################################
+HOOK @ $80710840
+{
+
+    lwz r4, 0x70(r3)
+    lwz r4, 0x38(r4)
+
+    cmpwi r4, 0x40
+    beq getHit
+    cmpwi r4, 0x3b
+    beq getHit
+
+armour: #grab armour/what faux super armour did
+    li r4, 1
+    b %end%
+getHit:
+#clear release damage 
+    lwz r3, 0x38(r3)
+    lwz r3, 0x40(r3)
+    li r4, 0
+    lwz r12, 0(r3)
+    lwz r12, 0xC(r12)
+    mtctr r12
+    bctrl
+    li r4, 0
+    stw r4, 0x94(r3)
+
+    lwz r3, 0xD8(r31)
+
+    li r4, 0
+}
+op mr r0, r5 @ $80772238 #in hitlag bit toggle removed
+op nop @ $807722a4 #hitlag frames removal removed
+
+################################################
+![Project+] Moving Platform Landing Fixes [Eon]
+################################################
+HOOK @ $80129A34
+{
+    addi r3, r1, 0x198 #prevPlatLocation
+    mr r4, r29 #prevECB
+    addi r5, r1, 0xE8 #result
+
+    #projectionX/[clSegment2D](prevPlat, prevECB, projectionResult)
+    lis r12, 0x8004
+    ori r12, r12, 0x08C4
+    mtctr r12
+    bctrl
+    cmpwi r3, 0
+    beq dontLand #projection didnt encounter previous frame, dont land
+
+    lfs f1, 0xEC(r1) #ypos of encounter
+    lfs f0, 0x4(r29) #prev ypos of fighter
+
+    lfs f2, -0x6930(r2) # 0.0
+    fsubs f1, f1, f0
+    fcmpo cr0, f1, f2 
+    blt moveECB #if previous ecb was above previous platform position, then do ecb shit
+
+
+dontLand:
+    lis r12, 0x8012
+    ori r12, r12, 0x9ADC
+    mtctr r12
+    bctr
+moveECB:
+    mr r3, r31
+}
+
+####################################################
+Expand Classic mode horde battle costume array [Eon]
+####################################################
+#increase stack
+op stwu r1, -0x100(r1) @ $806e0bc8
+op stw r0, 0x104(r1) @ $806E0BD0
+op lwz r0, 0x104(r1) @ $806e13e4
+op addi r1, r1, 0x100 @ $806e13ec
+#move array from offset 0x8 to offset 0xA0, changing size from 16 costumes to 96 costumes
+op addi r5, r1, 0xA0 @ $806e0ef0
+op addi r4, r1, 0xA0 @ $806e0f34
+op addi r15, r1, 0xA0 @ $806E0F5C
+op addi r5, r1, 0xA0 @ $806E0FCC
+
+#############################################
+Spring Props don't set X position [DukeitOut]
+#############################################
+CODE @ $80882AC8
+{
+    lfs f1, 4(r4)        # \ Only Y needs to be set
+    stfs f1, 0x10(r3)    # / 
+}
+CODE @ $80882C84
+{
+    lfs f1, 4(r4)        # \ Only Y needs to be set
+    stfs f1, 0x10(r3)    # / 
+}
+
+########################################################
+Change Subaction Pass Frame also Passes FSM v 1.1 [Eon]
+########################################################
+HOOK @ $80724224
+{
+    fmr f31, f1
+
+    #getRate
+    lwz r12, 0x0(r24)
+    mr r3, r24
+    lwz r12, 0x20(r12)
+    mtctr r12
+    bctrl 
+    fsubs f0, f1, f1
+    fcmpo cr0, f1, f0
+    ble %end% #if new speed <= 0, don't pass it
+    #set as passed frame speed 
+    fmr f30, f1
+} 
+
+####################################################################
+changeMaterialTex returns if getResTex returned a null pointer [Eon]
+####################################################################
+hook @ $800b72a0
+{
+    cmpwi r3, 0
+    bne end
+    lis r12, 0x800b
+    ori r12, r12, 0x73f4
+    mtctr r12 
+    bctr
+end:
+   stw r3, 0x44(r1)
+}
+
+#################################
+Universal Walljumping [Dantarion]
+#################################
+* C285893C 00000003
+* 2C030024 4082000C
+* 38600001 48000008
+* 7C63002E 00000000
+
+##############
+No Stale Moves
+##############
+* 02FC0988 00130000
+
+.include Source/codes/ProjectM/Damage.asm
+.include Source/codes/ProjectM/DirectionalInput.asm
+.include Source/codes/ProjectM/Elements.asm
+.include Source/codes/ProjectM/Grab.asm
+.include Source/codes/ProjectM/Knockback.asm
+.include Source/codes/ProjectM/Ledge.asm
+.include Source/codes/ProjectM/Modifier/Reflect.asm
+
+#############################################################################
+########################          UI Codes          #########################
+#############################################################################
+
+###########################################
+!Tourney Mode goes into Rotation Mode [ds22]
+###########################################
+* 046DE290 480016F0
+
+#######################################
+Pause Info Help Off by Default [ASF1nk]
+#######################################
+* 040f0108 38A00000
+
+#####################
+Tags in replays [Y.S]
+#####################
+* 0404B140 38A00000
+
+#########################################
+Timer Always Displays 6th Digit [ds22]
+#########################################
+* 040DE17C 60000000
+
+##########################################################################################################
+Individual Stock Icons (info.pac) V2.7 PMEx + 50CC [ds22, wiiztec, DukeItOut, PyotrLuzhin, KingJigglypuff, SammiHusky]
+##########################################################################################################
+* C20E2168 0000002C
+* 818100E8 3D609018
+* 896BF37F 2C0B0002
+* 4082007C 392000A5
+* 3D408058 614A8000
+* 897F0002 1D6B00A0
+* 7D4A5A14 896A009E
+* 80BF0020 2C050006
+* 41810020 2C050000
+* 40820030 3CA08128
+* 60A5AE64 80A50000
+* 2C050006 4081001C
+* 7D8A58AE 2C0C00CC
+* 4082000C 39600003
+* 48000008 396B0003
+* 7D8A58AE 2C0C00CC
+* 40820014 2C0B0000
+* 4182000C 39600000
+* 4BFFFFE8 3FA0817D
+* 38C0007D 3BBD5AC0
+* 7CC903A6 88DD0002
+* 7C0C3000 41820020
+* 88DD0003 7C0C3000
+* 41820014 3BBD0010
+* 4200FFE4 3FA0817D
+* 3BBD5AC0 7D876378
+* 899D0000 2C0C0042
+* 40A20008 39800025
+* 88C100ED 2C0900A5
+* 4082002C 7CCA582E
+* 54C6801E 54C6463E
+* 396B0003 996A009E
+* 2C1B0004 40820010
+* 892A009C 39290003
+* 992A009E 1D8C0032
+* 2C07002D 40A20008
+* 39802328 7D8C3214
+* 38EC0001 2C1B0000
+* 4082000C 7C882378
+* 7FFCFB78 3D8080C2
+* A18C4314 3BA05F65
+* 7C0CE800 4182000C
+* 6D1E8000 48000008
+* 6CFE8000 83BC008C
+* 60000000 00000000
+* 040E215C 60000000
+* 040E2160 60000000
+* C203D8B4 00000005
+* 2C09000B 40820018
+* 3C600006 38631C00
+* 3C800002 38847180
+* 7C641A14 881B001C
+* 60000000 00000000
+* 044218EC 00095F00
+* 0442190C 00180000
+* 04494990 00095F00
+* 044949EC 80C23A60
+* 044949F0 00180000
+* 046b2ffc 1c630032
+
+###################################
+Lagless Character Selection [Magus]
+###################################
+op fcmpo cr0, f0, f0 @ $8069D424
+
+#####################################
+L/R menu speed modifier [Sammi Husky]
+#####################################
+* 205BB504 00000100
+* 68000006 00000001
+* 265bb505 00000009
+* 68000004 00000002
+* 265bb505 00000041
+* 045A2240 00000000
+* 045A2244 00000000
+* 205bb505 00000000
+* 045A2240 00000E01
+* 045A2244 0A0605FF
+
+##################################################################
+!Faster Name Scrolling with Shoulder Buttons v1.1 [wiiztec, Magus]
+##################################################################
+HOOK @ $806A021C
+{
+      rlwinm. r8, r23, 0, 25, 26;    bne- loc_0x10
+     rlwinm. r8, r23, 0, 13, 13;      beq+ loc_0x20
+loc_0x10:
+      subi r5, r5, 0x4
+      cmpwi r5, 0xFFFF;    bge+ loc_0x20
+      li r5, 0xFFFF
+loc_0x20:
+      stw r5, 68(r26)    
+}
+HOOK @ $806A039C
+{
+      rlwinm. r8, r23, 0, 25, 26;  bne- loc_0x10
+      rlwinm. r8, r23, 0, 13, 13;  beq+ loc_0x20
+loc_0x10:
+      addi r5, r5, 0x4
+      cmpw r5, r29;         blt+ loc_0x20
+      subi r5, r29, 0x1
+loc_0x20:
+      stw r5, 68(r26)
+}
+
+##############################
+Reverse Name Sort [Dantarion]
+##############################
+op sub. r0, r4, r0 @ $8069F600
+
+###########################################
+Reset Tag when Unplugged [standardtoaster]
+###########################################
+HOOK @ $80695264
+{
+    stw r0, 0x1C8(r28) 
+    lwz r3, 0x1E4(r28)
+}
+
+######################################################################
+Japanese character support in name maker [Dantarion, standardtoaster]
+######################################################################
+CODE @ $80674534
+{
+    addi r4, r28, 0
+    li r5, 0x14
+    bl -0x670204
+    li r0, 0x5
+}
+int[6] 2, 4, 0, 1, 3, 0 @ $8067B790
+
+#######################################
+Allow disabled names [standardtoaster]
+#######################################
+op b 0xC @ $8069B82C
+op NOP   @ $806781E4
+
+#####################################
+Existing Tag Usage [standardtoaster]
+#####################################
+op mr r19, r3 @ $8069B868
+
+#############################
+CSS Cursor Speed [Dantarion]
+#############################
+float 1.3 @ $806A1014
+
+#########################################################################
+More Rules & Random Stage Switch are Selectable without Unlocking [Magus]
+#########################################################################
+op li r3, 1 @ $8004E818
+op li r3, 1 @ $8004E83C
+
+######################################################################
+All Stages Selectable on Random Stage Switch without Unlocking [Magus]
+######################################################################
+op li r0, 0xFFF @ $806AB860
+op li r0, 0xFFF @ $806AB8DC
+
+
+#########################################
+Use Custom CLR ID on Anchored GFX [Magus]
+#########################################
+HOOK @ $807A3E20
+{
+    lwz r30, 0xD8(r1)
+    cmpwi r14, 0x2329
+    bne+ %END%
+    lwz r30, 0x10(r2)
+}
+
+#################################################################
+[Legacy TE] Transforming Characters Switch Stocks [PyotrLuzhin]
+#################################################################
+* C20E2090 00000013
+* 38E00000 81810094
+* 7C0802A6 90020000
+* 9421FF80 BC610010
+* 3F608098 637B8E8C
+* 7C0CD800 4082005C
+* 3F609018 8B7BF37F
+* 2C1B0002 4082000C
+* 3B600001 48000008
+* 3B600005 6F5A8000
+* 93820004 93420008
+* 7FBCEB78 807C008C
+* C8220004 EC21E028
+* 3D80800B 618C7900
+* 7D8903A6 4E800421
+* 3B9C0004 3B7BFFFF
+* 2C1B0000 41A1FFD8
+* 80020000 B8610010
+* 80210000 7C0803A6
+* 60000000 00000000
+
+#####################################################################
+![Legacy TE] Team Glow CSS Toggle [PyotrLuzhin, Fracture, Yohan1044]
+#####################################################################
+* C26895F4 00000004
+* 807B01F4 886305C8
+* 2C030000 4182000C
+* 38600000 987B01C4
+* 7F63DB78 00000000
+* C268A498 0000000B
+* 3D809019 888CA0E4
+* 2C00001F 40820024
+* 2C0400CC 4182001C
+* 2C040000 40810020
+* 38800000 38A00001
+* 38000020 48000018
+* 38800001 38A00000
+* 4800000C 38800000
+* 38A00000 988CA0E4
+* 98ACA0E5 5404D97E
+* 60000000 00000000
+* C2689B90 00000003
+* 881805C8 2C000000
+* 4182000C 3D809019
+* 880CA0E4 00000000
+* C269A2E0 00000003
+* 8B6805C8 2C1B0000
+* 4182000C 3D809019
+* 8B6CA0E4 00000000
+* C269A3F0 00000003
+* 8B6805C8 2C1B0000
+* 4182000C 3D809019
+* 8B6CA0E4 00000000
+* C26974D0 00000003
+* 2C1B0000 41820010
+* 3D809019 898CA0E4
+* 2C0C0000 00000000
+* C2684968 00000003
+* 881A05C8 2C000000
+* 4182000C 3D809019
+* 880CA0E4 00000000
+* C26D5C28 00000003
+* 3D809019 898CA0E5
+* 2C0C0001 41820008
+* 981C000A 00000000
+* C281F4B8 00000011
+* 39610058 3D809019
+* 898CA0E5 2C0C0001
+* 40820070 7C0802A6
+* 90020000 9421FF80
+* BC610010 80DF0028
+* 88FF000A 2C0700FF
+* 40820008 38E00000
+* 1CE70008 7CFF3A14
+* 80670034 38A00010
+* 38800088 80C60014 #the 88 in this line is the base gfx id, it adds 1 or 2 for the other teams
+* 7C843214 80630060
+* 806300D8 80630088
+* 81830000 818C0054
+* 7D8903A6 4E800421
+* 80020000 B8610010
+* 80210000 7C0803A6
+* 60000000 00000000
+* C268EEF4 00000005
+* FC20F890 3D809019
+* 898CA0E5 2C0C0001
+* 40820010 3D8040C0
+* 91820000 C0220000
+* 60000000 00000000
+* C268A494 00000003
+* 889F05CB 899F05C8
+* 7C846278 989F05CB
+* 7FE3FB78 00000000
+* C26846E0 00000004
+* 888305CB 3CA0805A
+* 80A500E0 80A50010
+* 98850030 9421FF10
+* 60000000 00000000
+* C2684480 00000004
+* 3C80805A 808400E0
+* 80840010 88840030
+* 988305CB 9421FFD0
+* 60000000 00000000
+* C2686C04 00000006
+* 3C60805A 806300E0
+* 80630010 88830030
+* 88A30033 3C609018
+* 6063A0E4 98830001
+* 7C842A78 98830000
+* 889D05C8 00000000
+
+####################################################################################
+[Legacy TE] CSS keeps character choice for inactive ports between matches [Fracture]
+####################################################################################
+HOOK @ $80689B18
+{
+      stw r0, -4(r1); mflr r0
+      stw r0, 4(r1);  mfctr r0
+      stw r0, -8(r1)
+      stwu r1, -0x84(r1)
+      stmw r3, 8(r1)
+      lwz r5, 0x1B8(r26)
+      andi. r5, r5, 0xFFFE
+      cmpwi r5, 0x28; beq- skip
+      lwz r3, 160(r30)
+      li r4, 0x0
+      lis r0, 0x8069;  ori r0, r0, 0xECAC;  mtctr r0;  bctrl 
+      mr r3, r30
+      lis r0, 0x8069;  ori r0, r0, 0xD1E8;  mtctr r0;  bctrl 
+      mr r3, r26
+      lwz r4, 440(r26)
+      li r5, 0xC0DE;     andi. r5, r5, 0xFFFF
+      lis r0, 0x8069;  ori r0, r0, 0x6F60;  mtctr r0;  bctrl 
+skip:
+      lmw r3, 8(r1)
+      addi r1, r1, 0x84
+      lwz r0, -8(r1);        mtctr r0
+      lwz r0, 4(r1);        mtlr r0
+      lwz r0, -4(r1);        mr r3, r24
+}
+HOOK @ $80696F8C
+{
+      cmplwi r5, 0xC0DE
+      bne- skip
+      lwz r29, 0x1BC(r3)
+      bc 20, 20, %END%
+skip:
+      li r29, 0x0
+}
+
+##########################################################
+Melee Random v2 (CSS Expansion) [Sammi Husky]
+##########################################################
+* 0468AE20 60000000
+* C268AE24 0000003F
+* 2C1B0028 408201EC
+* 9421FFE0 7C0802A6
+* 90010024 3D80803F
+* 618C130C 7D8903A6
+* 4E800421 3C60805A
+* 38630420 3D808003
+* 618CFAF8 7D8903A6
+* 4E800421 A078043A
+* 48000129 7C981A14
+* 888404A4 7F83E378
+* 3D808069 618C48D4
+* 7D8903A6 4E800421
+* 7C641B78 7F83E378
+* 3D808069 618C3D18
+* 7D8903A6 4E800421
+* 3C60805A 38630420
+* 3D808003 618CFAF8
+* 7D8903A6 4E800421
+* 807C01B8 3D80800A
+* 618CF8D0 7D8903A6
+* 4E800421 480000C5
+* 907C01BC 3D80803F
+* 618C1358 7D8903A6
+* 4E800421 80010024
+* 7C0803A6 38210020
+* 7F83E378 809C01B8
+* 80BC01B4 80DC01BC
+* 80FC01F4 88E705C8
+* 811C01C0 893C01C4
+* 3D808069 618C742C
+* 7D8903A6 4E800421
+* 807C01B8 3D80800A
+* 618CF82C 7D8903A6
+* 4E800421 3D80800A
+* 618CF6F0 7D8903A6
+* 4E800421 38630001
+* 48000095 807C00B8
+* 3D80800B 618C7900
+* 7D8903A6 4E800421
+* 801F03DC 2C000000
+* 837C01B8 418200AC
+* 809C01B8 7FE3FB78
+* 80BC01BC 3D808069
+* 618C2498 7D8903A6
+* 4E800421 4800008C
+* 9421FFE0 7C0802A6
+* 90010024 6C608000
+* 9001000C 3F40806A
+* C85A0838 3C004330
+* 90010008 C8010008
+* EC001028 EC000072
+* FC00001E D8010010
+* 80610014 80010024
+* 7C0803A6 38210020
+* 4E800020 9421FFE0
+* 7C0802A6 90010024
+* 3C004330 6C638000
+* 3C80806A 9061000C
+* C8240EB8 90010008
+* C8010008 EC200828
+* 80010024 7C0803A6
+* 38210020 4E800020
+* 7FA3EB78 60000000
+
+################################################################################
+[Legacy TE] sc_selmap.pac can be 3 times larger because I said so V2 [DukeItOut]
+#
+# V2: Altered code to be more flexible and stable
+################################################################################
+HOOK @ $806BF22C
+{
+  sub r5, r0, r3
+  lis r12, 0x12;   ori r12, r12, 0x8760;  cmplw r3, r12;   bne- finish    # Expected file size
+checkIfMenuResource:
+  lwz r12, 0x20(r27); lwz r0, 0xC(r12)    # Get the memory size of the heap being used
+  lis r12, 0x8042; lwz r12, 0x2384(r12)    # Get the memory size of MenuResource
+  cmpw r0, r12; bne finish        # Check if they match
+  subis r5, r5, 0x20            # Shift back 0x200000
+finish:
+  lbz r0, 0x1C(r27); rlwinm. r0, r0, 26, 31, 31    # Reset cache condition check
+}
+
+#########################################################################################
+![Legacy TE] Hold L/R to inc/dec 1/4 of a character's costume count on the CSS [DukeItOut]
+#########################################################################################
+op sub r26, r26, r3     @ $8069A274
+op add r26, r26, r3     @ $8069A384
+op b 0x8        @ $8069BE34
+HOOK @ $8069BE30
+{
+      lis r27, 0x8069
+      ori r27, r27, 0xBE38
+      lwz r29, 8(r1)
+      andi. r3, r29, 0x60    // if either L (40) or R (20) are held
+      li r3, 0x0
+      beq- notSoFast
+      li r3, 0x1        // initiate the status to allow rapid scrolling
+notSoFast:
+      stw r3, 0(r27)        // which is stored at 8069BE38
+      lwz r29, 20(r1)
+      and r3, r29, r0
+      lwz r27, 12(r1)
+      neg r0, r3
+}
+HOOK @ $8069A37C
+{
+      lis r6, 0x8069
+      ori r6, r6, 0xBE38
+      lwz r6, 0(r6)
+      cmplwi r6, 1
+      beq- hastyScroll
+      subic. r26, r26, 0x1
+      b %END%
+hastyScroll:
+      li r6, 0x4    
+     divw r6, r3, r6        // jump rate = 1/r6 * total
+      subc. r26, r26, r6
+}
+HOOK @ $8069A268
+{
+      lis r6, 0x8069
+      ori r6, r6, 0xBE38
+      lwz r6, 0(r6)
+      cmplwi r6, 1
+      beq- hastyScroll
+      addi r26, r26, 0x1
+      b %END%
+hastyScroll:
+      li r6, 0x4    
+      divw r6, r3, r6        // jump rate = 1/r6 * total
+      add r26, r26, r6
+}
+
+
+##################################################################
+[Project+] 1-P Battles Don't Use Start Countdown [JOJI, DukeItOut]
+##################################################################
+HOOK @ $806D182C
+{
+  cmpwi r0, 0;  bne- normal    # not multiplayer if non-zero
+  lis r12, 0x9018;  ori r12, r12, 0xF5D    # 90180F5D+5C= 90180FB9, the first address we need, with each port separated by 0x5C bytes
+  lbzu r3, 0x5C(r12)    # note that is a load with update and not a load, reading port 1
+  lbzu r5, 0x5C(r12)    # reading port 2
+  add r3, r3, r5
+  lbzu r5, 0x5C(r12)    # reading port 3
+  add r3, r3, r5
+  lbzu r5, 0x5C(r12)    # reading port 4
+  add r3, r3, r5
+  cmplwi r3, 9;  blt+ normal
+  li r0, 0x2        # force to skip countdown if the sum suggests that more than 2 ports are inactive
+normal:
+  mulli r0, r0, 0x14
+
+}
+
+#################################################################################################################
+Salty Runback (Hold L+R+B to rematch instead of result screen) V2.5 (Minus Edition) [codes, ds22, Dantarion, Eon]
+#################################################################################################################
+HOOK @ $806DCD4C
+{
+checkInputs: 
+  li r0, 0x0
+  li r11, 0x0
+  lis r12, 0x805C
+  subi r12, r12, 0x5340
+loc_0x2C:
+  lwzu r3, 64(r12)
+  andi. r0, r3, 0x260
+  cmpwi r0, 0x260
+  beq- resetStage
+  cmpwi r11, 0x4
+  blt- loc_0x5C
+  andi. r0, r3, 0x1000
+  cmpwi r0, 0x1000
+  beq- loc_0x6C
+loc_0x50:
+  andi. r0, r3, 0x410
+  cmpwi r0, 0x410
+  beq- loc_0x80
+loc_0x5C:
+  addi r11, r11, 0x1
+  cmpwi r11, 0x8
+  bne- loc_0x2C
+  b loc_0xA4
+loc_0x6C:
+  rlwinm. r0, r3, 16, 16, 31
+  andi. r0, r0, 0x8
+  cmpwi r0, 0x8
+  beq- resetStage
+  b loc_0x50
+loc_0x80:
+  rlwinm. r0, r3, 16, 16, 31
+  andi. r0, r0, 0x4
+  cmpwi r0, 0x4
+  beq- resetStage
+  b loc_0x5C
+
+resetStage:
+  lis r11, 0x9018
+  addi r11, r11, 0xF20
+  lhz r0, 0x1A(r11)
+  cmpwi r0, 0x13
+  beq- memChange #is CS
+  cmpwi r0, 0x19 
+  beq- memChange #is Lylat
+
+#if normal stage just reset with no memoryChange
+  lis r3, 0x806D
+  ori r3, r3, 0xCD30
+  mtctr r3
+  bctr 
+
+memChange:
+#if lylat or castle seige reset with a memoryChange, has longer load times associated with it
+  lis r3, 0x806D
+  ori r3, r3, 0xCB80
+  mtctr r3
+  bctr 
+
+
+loc_0xA4: #original command
+  li r0, 0xB
+}
+
+.include Source/codes/ProjectM/CSS.asm
+.include Source/codes/ProjectM/SSSButtons.asm
+.include Source/codes/LegacyTE/AltCostume.asm
+.include Source/codes/LegacyTE/Masquerade.asm
+.include Source/codes/LegacyTE/TagsControls.asm
+
+.include Source/codes/Project+/CSSCustomControls.asm
+
+#############################################################################
+###################          Visual/Audio Codes          ####################
+#############################################################################
+
+############################################
+!Franklin Badge SFX Modifier V2 [Magus, ds22]
+############################################
+* C2840824 00000004
+* 2C05001A 41800014
+* 2C05001D 4181000C
+* 38801F86 48000008
+* 3880000B 00000000
+
+##########################################
+Fighter Reflect SFX Modifier [Sammi Husky]
+##########################################
+* 04840824 388000d9
+
+###############################
+Team Coloured Shields V2 [ds22]
+###############################
+* C281DEEC 00000003
+* 2C170002 4182000C
+* 7EE4BB78 48000008
+* 38800003 00000000
+* 0481DEF4 7EE4BB78
+
+#########################################################
+Team Colour Shade Check Fix (BrawlEx) [ds22, Sammi Husky]
+#########################################################
+* C26D5BE0 00000002
+* 7C7F1B78 7D6C5B78
+* 60000000 00000000
+* C26D5C08 00000003
+* 2C03000D 4082000C
+* 2C1F000D 41820008
+* 7C0C5800 00000000
+* C2952B0C 00000002
+* 7C6B1B78 7C640214
+* 60000000 00000000
+
+##################################
+Team Colour Shade Modifier [ds22]
+##################################
+* 06F9FF64 0000000C
+* 00000080 80808080
+* FFFFFF80 00000000
+
+########################################################
+SFX Survival -> Choose Your Character [Standardtoaster]
+########################################################
+op li r4, 0x2046 @ $80683998
+op li r4, 0x2046 @ $8068E590
+
+############################################
+!Random has Announcer Call [standardtoaster]
+############################################
+op NOP        @ $8068AFC0
+int 0x1EEC    @ $80455980
+HOOK @ $800AF898
+{
+      cmpwi r29, 0x29; bne- loc_0x10
+      lis r3, 0x8045;  ori r3, r3, 0x5978
+loc_0x10:
+      lwz r3, 8(r3)
+}
+
+#########################################
+SFX Fade Fix PMEXv0.5 [ds22, PyotrLuzhin]
+#########################################
+* C21C7574 00000004
+* 2C1A2431 41800010
+* 2C1A26F8 41810008
+* 38000005 901F0000
+* 60000000 00000000
+
+#############################################
+All Music Available without Unlocking [Magus]
+#############################################
+op li r0, -1 @ $8004FA64
+
+##############################
+Locked Stage Music Fix [Magus]
+##############################
+op li r0, 0xFFF @ $8004FAE4
+
+########################
+!Unlock all Stages [eric]
+########################
+* 42000000 90000000
+* 0417B658 FFFFFFFF
+* E0000000 80008000
+
+####################################
+!All Levels Unlocked [Bully@Wiiplaza]
+####################################
+* C26838C0 00000003
+* 3D805555 618C5555
+* 7D83012E 7C03002E
+* 60000000 00000000
+
+.include Source/codes/Project+/CSE.asm
+#.include Source/codes/Project+/ResultsMusic.asm
+.include Source/codes/Project+/SFXExpand.asm
+
+#############################################################################
+################          Character-Specific Codes          #################
+#############################################################################
+
+###########################################################
+Yoshi Eggs are Costume Based v1.1 [ds22] (char id fix fix)
+###########################################################
+HOOK @ $80A1580C
+{
+      lwz r31, 0x1C(r26); lwz r31, 0x28(r31);  lwz r31, 0x10(r31); lbz r31, 0x55(r31)
+
+    lwz r26, 0x70(r26);
+    lwz r26, 0x20(r26);
+    lwz r26, 0x0C(r26);
+    lwz r26,0x2D0(r26);
+    lwz r26, 0x08(r26);
+    lwz r26,0x110(r26);
+
+      cmpwi r26, 0x5;     beq- loc_0x50
+      lis r26, 0x80B8;    lwz r26, 0x7C50(r26);lwz r26, 0(r26)
+      mulli r31, r31, 0x4D4
+      add r26, r26, r31
+      addi r26, r26, 0x18
+loc_0x3C:
+      lwzu r4, 4(r26)
+      cmpwi r4, 0xFF;    bge+ loc_0x3C
+      stw r4, 20(r1)
+      b loc_0x54
+loc_0x50:
+      stw r5, 20(r1)
+loc_0x54:
+      mr r31, r3
+}
+op NOP @ $80A15820
+
+###########################
+!Gandouken [Standardtoaster]
+###########################
+* 4A000000 9105E780
+* 14000640 41100000
+* 14000644 3F400000
+* 4A000000 9105F020
+* 1400006C 00000078
+* 16000040 0000000C
+* 00020000 00020000
+* 00020000 00000000
+* 14000730 00000073
+* 14000704 36431085
+
+############################################################
+PT Pokemon Have Final Smashes & FS Characters Don't [ds22]
+############################################################
+* 04B060DC 8081DF8C
+* 04B060E4 8081DF8C
+* 04B060EC 8081DF8C
+* 04B06114 8081DF84
+* 0481DF14 809D0008
+* 0481DF18 3804FFFD
+* 0481DF84 380000EC
+* 04AD8BB4 17171717
+* C281DF6C 00000003
+* 3800005C 2C04002D
+* 40A20008 3800007C
+* 60000000 00000000
+
+#######################################################
+Independent Pokemon Engine HTP, Classic & MMS [ds22]
+#######################################################
+* C26DDDF4 00000006
+* 2C03001D 40A20008
+* 3860001E 2C03001F
+* 40A20008 38600020
+* 2C030021 40A20008
+* 38600022 987D0098
+* 60000000 00000000
+* C26E1178 00000006
+* 2C12001D 40A20008
+* 3A40001E 2C12001F
+* 40A20008 3A400020
+* 2C120021 40A20008
+* 3A400022 9A550098
+* 60000000 00000000
+* C295E184 00000006
+* 2C1F001D 40A20008
+* 3BE0001E 2C1F001F
+* 40A20008 3BE00020
+* 2C1F0021 40A20008
+* 3BE00022 9BE30000
+* 60000000 00000000
+
+#######################################################################
+Independent Pokemon Save Data Engine + no wreck My Music v2 [spunit262]
+#######################################################################
+* 06407BD0 0000000E
+* 04030F0D 1E1B1F1B
+* 201B211B 221B0000
+
+#####################
+Unload PT Data [ds22]
+#####################
+word[24] 0x1D, 0x1E, 0x1F, 0x1C, 0x1D, -1, -1, -1, |
+         0x1E, 0x1F, 0x1D, 0x1C, 0x1E, -1, -1, -1, |
+         0x1F, 0x1D, 0x1E, 0x1C, 0x1F, -1, -1, -1, |
+@ $80AD8428
+
+#######################################################
+Samus Aerial Charge Shot Charging [ds22]
+#######################################################
+* 04A06348 4BFFFDD0
+* 04A06210 4BFFFDD0
+* 04A07050 48000040
+* 04A06580 60000000
+* 04A065C4 60000000
+* 04A068C0 60000000
+* 04A068C4 60000000
+* 04A06160 4080009C
+
+################################
+ZSS Jumbo Screen Name Fix [ds22]
+################################
+op li r23, 0x17 @ $80985F44 //0x17 is ZSS ID, instead of the normal 0x3 for Samus
+op li r30, 0x17 @ $8098652C 
+
+#################################
+[Project+] Roy Counter Fix [ds22] 
+#################################
+HOOK @ $808A1058
+{
+  cmpwi r3, 0x27;  beq- loc_0x10
+  li r3, 0x0;  b %END%
+loc_0x10:
+  li r3, 0x1
+}
+
+####################################################################
+[Project+] All-Star allows Giga Bowser to the next stage [DukeItOut]
+####################################################################
+HOOK @ $80944048
+{
+    bctrl        # Original operation
+    lis r12, 0x9018        # \
+    lhz r12, 0x0F3A(r12)# |
+    cmpwi r12, 0x36        # | All-Star Rest Area is the only stage this will apply to! 
+    bne+ %END%            # /        
+    lis r12, 0x4150        # \ 13.0 (center of platform is at 0.0, so absolutes can be used!)
+    stw r12, -0x4(r1)    # |
+    lfs f1, -0x4(r1)    # /
+Check_P1:
+    lis r12, 0x8062        # \
+    lwz r12, 0x3324(r12)# |
+    cmpwi r12, 0        # | If this is 0, the character is unloaded!
+    beq- %END%            # /
+    lwz r12, 0x60(r12)    # \
+    lwz r3, 0x1C(r12)    # | Get Air/Ground status
+    lwz r3, 0x28(r3)    # |
+    lwz r3, 0x10(r3)    # |
+    lbz r3, 0x8(r3)        # /
+    cmpwi r3, 1            # \ 1 = On Ground
+    bne- Check_P2_Co_Op    # /
+    lwz r12, 0x18(r12)    # \
+    lfs f0, 0xC(r12)    # / Get Player 1's X position
+    fabs f0, f0            # | Is the character within 13.0 units of all-star and on the ground???
+    fcmpu cr0, f0, f1    # |
+    blt- Move_On        # /
+Check_P2_Co_Op:
+    lis r12, 0x8062        # \
+    lwz r12, 0x3568(r12)# |
+    cmpwi r12, 0        # | If this is 0, the character is unloaded!
+    beq- %END%            # /
+    lwz r12, 0x60(r12)    # \
+    lwz r3, 0x1C(r12)    # | Get Air/Ground status
+    lwz r3, 0x28(r3)    # |
+    lwz r3, 0x10(r3)    # |
+    lbz r3, 0x8(r3)        # /
+    cmpwi r3, 1            # \ 1 = On Ground
+    bne- %END%            # /
+    lwz r12, 0x18(r12)    # \
+    lfs f0, 0xC(r12)    # / Get Player 2's X position
+    fabs f0, f0            # | Is the character within 13.0 units of all-star and on the ground???
+    fcmpu cr0, f0, f1    # |
+    bge+ %END%            # /
+Move_On:    
+    li r3, 1            # \ Force All-Star to the next stage if within 13 units of the platform and on the ground.
+    stb r3, 0x2A8(r30)    # /
+}    
+
+###############################################
+!Alloys Can Shield, Dodge & Grab Ledges [ds22]
+###############################################
+* 048A082C 48000088
+* 048A083C 48000078
+* 048A087C 48000038
+
+#####################################
+Game and Watch Chef Tweaks [Mawootad]
+#####################################
+* C2A5912C 0000002D
+* 3B7C0002 2C1B0005
+* 41A00008 3B7BFFFB
+* 9421FFE8 90810010
+* 80982148 9081000C
+* 38600015 3D808004
+* 398CFC7C 7D8903A6
+* 4E800421 1C9B0007
+* 3884001E 7C841A14
+* 5483783E 3C633F80
+* 90610008 C0210008
+* 3C603D24 3863D70A
+* 90610008 C0010008
+* FC000072 8061000C
+* 20BB0004 1CA5FFEC
+* 38A5FFF4 7C032D6E
+* 9061000C 3C603C8F
+* 3863FA35 90610008
+* 3C600000 90610004
+* E0010004 7C11E2A6
+* 90A10014 3CA00007
+* 7CB1E3A6 38600006
+* 90610008 E0411008
+* 38600078 90610008
+* E0611008 B081000A
+* 2084005A B0810008
+* E0211008 10000014
+* 10421094 106318D4
+* 10210032 13E00890
+* 10000890 10211024
+* 102107F2 102107F2
+* 10000828 102100B2
+* 102107F2 102107F2
+* 10211824 1000082A
+* 10631824 106318D6
+* 1063102A 100000F2
+* 10001024 13E00090
+* 807900D8 80630064
+* 81830000 818C0038
+* 7D8903A6 90610008
+* 3C801100 38840015
+* 4E800421 101F0FD4
+* 8061000C F0030FF8
+* 80610014 7C71E3A6
+* 80810010 38210018
+* 60000000 00000000
+
+#################################################
+Warioman Never Turn into Wario After Death [JOJI]
+#################################################
+* C28205C0 00000004
+* 83A30030 281D0031
+* 40820008 38800000
+* 9883000B 3C8080B8
+* 60000000 00000000
+
+####################################
+Luigi ZA WARUDO Engine [PyotrLuzhin]
+####################################
+* C28761C4 00000004
+* 28000003 41820014
+* 3D80901A 818CEF60
+* 280C0001 41820008
+* 60000000 00000000
+* C276D250 00000004
+* 28190003 41820014
+* 3D80901A 818CEF60
+* 280C0001 41820008
+* 60000000 00000000
+* C2954C90 00000004
+* 80A1000C 3D80901A
+* 818CEF60 2C0C0001
+* 40820008 38A00000
+* 60000000 00000000
+
+#####################
+PT Classic fix [ds22]
+#####################
+* C26E1178 00000006
+* 2C12001D 40A20008
+* 3A40001E 2C12001F
+* 40A20008 3A400020
+* 2C120021 40A20008
+* 3A400022 9A550098
+* 60000000 00000000
+
+#######################
+!My Music "Fix" [Glitch]
+#######################
+* C26B6838 00000005
+* 93FD0248 3E208057
+* 93B10000 9BF10004
+* 3E408049 62526000
+* 8A720000 9A710005
+* 60000000 00000000
+* 28570004 00000D00
+* 48000000 80570000
+* DE000000 80008180
+* 1000024B 0000000E
+* E0000000 80008000
+* E0000000 80008000
+* 28570004 00002200
+* 48000000 80570000
+* DE000000 80008180
+* 1000024B 00000023
+* E0000000 80008000
+* E0000000 80008000
+* 28570004 00000001
+* 48000000 80570000
+* DE000000 80008180
+* 1000024B 00000001
+* E0000000 80008000
+* E0000000 80008000
+* 28570004 00000301
+* 48000000 80570000
+* DE000000 80008180
+* 1000024B 00000004
+* E0000000 80008000
+* E0000000 80008000
+* 28570004 00000D01
+* 48000000 80570000
+* DE000000 80008180
+* 1000024B 00000006
+* E0000000 80008000
+* E0000000 80008000
+* 28570004 00000E01
+* 48000000 80570000
+* DE000000 80008180
+* 1000024B 0000000F
+* E0000000 80008000
+* E0000000 80008000
+
+###################################################
+PSA command 11210100 sets next GFX anim index [Eon]
+###################################################
+HOOK @ $807A55F0
+{
+    li r3, 0
+    bne %end%
+    lwz r12, 0(r21)
+    mr r4, r21
+    addi r3, r1, 0x818
+    lwz r12, 0x1C(r12)
+    mtctr r12 
+    bctrl 
+    addi r3, r1, 0x818
+    stw r31, 0x10(r3) #store moduleAccesser for getInt to use
+    li r4, 0
+    #soAnimCmdArgList.getInt(animArgList, index) #static function
+    lis r12, 0x8077 
+    ori r12, r12, 0xDFDC
+    mtctr r12 
+    bctrl
+    mr r27, r3
+
+    #ecMgr.getInstance() #static function
+    lis r12, 0x807A
+    ori r12, r12, 0x2874
+    mtctr r12 
+    bctrl
+    mr r4, r27
+    mr r5, r27
+    mr r6, r27
+    mr r7, r27
+    mr r8, r27
+    mr r9, r27
+    #ecMgr.presetAnimIdx(i, i, i, i, i, i, i) #static function
+    lis r12, 0x8006
+    ori r12, r12, 0x06A8
+    mtctr r12 
+    bctrl
+    li r3, 1
+}
+
+No Wiimote Character SFX [Sammi Husky]
+* 0468b044 48000020
+
+###############################################
+Yoshi Eggs don't despawn when Yoshi dies [Eon]
+###############################################
+op nop @ $80A15CC0
+
+.include Source/codes/Minus/Attributes.asm
+.include Source/codes/Project+/PokeTrainer.asm
+.include Source/codes/Project+/Debug/modifiedDebug.asm
+
+###############################################
+[Legacy TE] Extra null pointer catch [Fracture]
+###############################################
+.RESET
+op cmplwi r0, 0x30 @ $8018CFC4
+op blt- 0x34       @ $8018CFC8
+
+.include Source/codes/Project+/StageEX.asm
+.include Source/codes/Project+/StageFiles.asm
+.include Source/codes/Project+/CustomRequirements.asm
+.include Source/codes/Project+/CStick.asm
+.include Source/codes/Project+/UCF.asm
+.include Source/codes/Project+/PSA.asm
+.include Source/codes/ProjectM/PSA/Effects.asm
+.include Source/codes/ProjectM/PSA/Misc.asm
+.include Source/codes/ProjectM/PSA/PowerShield.asm
+#.include Source/codes/ProjectM/PSA/Items.asm
+.include Source/codes/ProjectM/PSA/Glide.asm
+.include Source/codes/ProjectM/PSA/Edge.asm
+
+.include Source/codes/Project+/Moonwalk.asm
+
+#.include Source/codes/Extras/PlatformIgnore.asm
+
+#.include Source/codes/Minus/MinMax.asm
+.include Source/codes/Minus/PSA.asm
+.include Source/codes/Minus/Wiimmfi.asm
+.include Source/codes/Minus/Engine.asm
+.include Source/codes/Minus/Constants.asm
+.include Source/codes/Minus/Teams.asm
+.include Source/codes/Minus/Variables.asm
+.include Source/codes/Minus/Requirements.asm
+
+.include Source/codes/Extras/Console.asm    # Only use this on a Wii or Wii U! The codes in this are necessary for the slower specifications of the actual console.
+#.include Source/codes/Extras/Netplay.asm    # Only use this in Dolphin! The codes in this will result in bad behavior on the Wii!
+.include Source/codes/Extras/More.asm

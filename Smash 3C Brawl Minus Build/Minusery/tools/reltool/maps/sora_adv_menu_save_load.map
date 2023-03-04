@@ -1,0 +1,5 @@
+.section 1
+.module 35
+00000000 moadvmenu___prolog
+00000048 moadvmenu___epilog
+00000090 moadvmenu___unresolved
