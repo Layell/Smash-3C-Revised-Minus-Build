@@ -1,10 +1,10 @@
 {
   "Name": "st_gw",
   "Type": "rel",
-  "ModuleID": 43,
+  "ModuleID": 63,
   "ModuleAlign": 32,
   "BSSAlign": 8,
-  "FixSize": 14464,
+  "FixSize": 146480,
   "Sections": [
     null,
     {
@@ -29,7 +29,7 @@
       "HasCode": false,
       "IsBSS": false,
       "Expand": false,
-      "ExpandSize": 0
+      "ExpandSize": 4
     },
     {
       "Path": "Section[4].asm",
@@ -37,7 +37,7 @@
       "HasCode": false,
       "IsBSS": false,
       "Expand": false,
-      "ExpandSize": 24
+      "ExpandSize": 16
     },
     {
       "Path": "Section[5].asm",

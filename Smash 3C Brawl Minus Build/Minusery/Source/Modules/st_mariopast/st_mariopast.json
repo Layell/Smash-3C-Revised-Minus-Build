@@ -1,10 +1,10 @@
 {
   "Name": "st_mariopast",
   "Type": "rel",
-  "ModuleID": 45,
+  "ModuleID": 48,
   "ModuleAlign": 32,
   "BSSAlign": 8,
-  "FixSize": 12352,
+  "FixSize": 78752,
   "Sections": [
     null,
     {
@@ -29,7 +29,7 @@
       "HasCode": false,
       "IsBSS": false,
       "Expand": false,
-      "ExpandSize": 0
+      "ExpandSize": 4
     },
     {
       "Path": "Section[4].asm",
@@ -37,7 +37,7 @@
       "HasCode": false,
       "IsBSS": false,
       "Expand": false,
-      "ExpandSize": 12
+      "ExpandSize": 16
     },
     {
       "Path": "Section[5].asm",

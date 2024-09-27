@@ -1,6 +1,19 @@
+# Fighters 
 0x90    : ft_pichu
 0x91    : ft_roy
 0x92    : ft_mewtwo
 0x94    : ft_waluigi
 0x95    : ft_ridley
 0x96    : ft_drmario
+
+# Stages
+0x100   : st_gyromite
+0x101   : st_hyrule64
+0x102   : st_kingofthehill
+0x103   : st_metal
+0x104   : st_mushroomkingdom
+0x105   : st_peach64
+0x106   : st_saffron
+0x107   : st_subcon
+0x108   : st_trophy
+0x109   : st_jungle64

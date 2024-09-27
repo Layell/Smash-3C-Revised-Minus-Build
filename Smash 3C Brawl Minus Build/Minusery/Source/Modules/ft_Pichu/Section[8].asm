@@ -49,19 +49,19 @@ loc_A0:
         .4byte 0xCCCCCCCC
         .4byte 0xCCCCCCCC
 loc_C0:
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_9A")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_162")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_1806")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_8B9E")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_8D06")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_8D9A")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_8E2E")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_9556")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_E28E")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_E2F6")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_E352")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_15706")]
-        .4byte 0x00000000         [R_PPC_ADDR32(144, 7, "loc_F2")]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_98" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_160" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_1804" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_8B9C" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_8D04" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_8D98" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_8E2C" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_9554" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_E28C" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_E2F4" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_E350" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 1, "loc_15704" + 2)]
+        .4byte 0x00000000         [R_PPC_ADDR32(144, 7, "loc_F0" + 2)]
         .4byte 0xCCCCCCCC
         .4byte 0xCCCCCCCC
         .4byte 0xCCCCCCCC

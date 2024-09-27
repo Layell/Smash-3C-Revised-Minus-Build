@@ -642,6 +642,7 @@ Unrestricted Control Editing [spunit262]
 .include Source/codes/ProjectM/SpecialModes/Turbo.asm
 #.include Source/codes/ProjectM/SpecialModes/Zero2Death.asm
 
+.include Source/codes/LegacyTE/ASLHelper.asm
 .include Source/codes/LegacyTE/CPU.asm
 .include Source/codes/LegacyTE/LoadFlags.asm
 .include Source/codes/LegacyTE/UnboundedTeamEngine.asm
@@ -651,6 +652,7 @@ Unrestricted Control Editing [spunit262]
 #.include Source/codes/Project+/CodeMenu.asm
 .include Source/codes/Project+/CompressPAC.asm
 .include Source/codes/Project+/FilePatchCode.asm
+.include Source/codes/P+Ex/WaveIDIntercept.asm
 .include Source/codes/Project+/IndependentSub.asm
 .include Source/codes/Project+/Memory.asm
 .include Source/codes/Project+/TrainingMode.asm
@@ -1410,6 +1412,16 @@ All Stages Selectable on Random Stage Switch without Unlocking [Magus]
 op li r0, 0xFFF @ $806AB860
 op li r0, 0xFFF @ $806AB8DC
 
+###########################################
+All Target Smash Levels unlocked by default
+###########################################
+HOOK @ $806838C0
+{
+  lis r12, 0x5555
+  ori r12, r12, 0x5555
+  stwx r12, r3, r0
+  lwzx r0, r3, r0
+}
 
 #########################################
 Use Custom CLR ID on Anchored GFX [Magus]
@@ -2306,7 +2318,12 @@ op nop @ $80A15CC0
 op cmplwi r0, 0x30 @ $8018CFC4
 op blt- 0x34       @ $8018CFC8
 
-.include Source/codes/Project+/StageEX.asm
+Grabboxes work out of any action [Eon]
+######################################
+op nop @ $8083D250
+op nop @ $8083D25C
+
+#.include Source/codes/Project+/StageEX.asm
 .include Source/codes/Project+/StageFiles.asm
 .include Source/codes/Project+/CustomRequirements.asm
 .include Source/codes/Project+/CStick.asm
@@ -2335,3 +2352,6 @@ op blt- 0x34       @ $8018CFC8
 .include Source/codes/Extras/Console.asm    # Only use this on a Wii or Wii U! The codes in this are necessary for the slower specifications of the actual console.
 #.include Source/codes/Extras/Netplay.asm    # Only use this in Dolphin! The codes in this will result in bad behavior on the Wii!
 .include Source/codes/Extras/More.asm
+.include Source/codes/Project+/EffectCommands.asm
+.include Source/codes/Project+/YoshiEggs.asm
+.include Source/codes/Extras/Unlocks.asm

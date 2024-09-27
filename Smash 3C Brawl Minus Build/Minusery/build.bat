@@ -101,7 +101,6 @@ GOTO :EOF
 :BuildModules
 ECHO This will put the modules in pf/module folder.
 timeout /t 5
-del /S "*.rel"
 "./tools/reltool/reltools.exe" -m "./tools/reltool/maps" -r "./Source/Modules/%~2" -o ./pf/module
 GOTO :EOF
 

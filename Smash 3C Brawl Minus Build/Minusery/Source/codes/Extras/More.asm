@@ -282,6 +282,25 @@ notNull:
     mr r3, r28 #do normal function with raycast
 }
 
+#################################
+ecTrace render Fix [MarioDox]
+#################################
+# Fixes a weird issue where one side of Sword Trails would not render if no effect is on screen and if the hud was enabled.
+HOOK @ $800662dc #renderXlu/[ecTrace]
+{
+    stw        r0, 0x314(r1)
+    mr         r16, r3
+    li         r3, 0x0             # Cull Mode 0 (CULL_NONE)
+    stwu     r1, -0x10(r1)
+    mflr     r0
+    lis     r12, 0x801F         # \
+    ori     r12, r12, 0x136C     # | GXSetCullMode/[GXGeometry]
+    mtctr     r12                 # |
+    bctrl                         # /
+    addi     r1, r1, 0x10
+    mr         r3, r16
+}
+
 ############################
 Final Smash Music Fix [JOJI]
 ############################

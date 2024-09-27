@@ -328,8 +328,8 @@ op cmplwi r0, 0x35 @ $80951198		# 0x35 = Stage Builder stage
 ##########################################
 Miscellaneous Music Customizer [DukeItOut]
 ##########################################
-.alias VSResults 		= 0xF400	# Song ID to play (0x2700 in Brawl)
-.alias AllStarRest		= 0xF400	# Song ID to play (0x2707 in Brawl)
+.alias VSResults 		= 0x2700	# Song ID to play (0x2700 in Brawl)
+.alias AllStarRest		= 0x2707	# Song ID to play (0x2707 in Brawl)
 .alias BreakTheTargets	= 0x2712	# Song ID to play (0x2712 in Brawl)
 CODE @ $800EB14C			# VS. Results Theme
 {

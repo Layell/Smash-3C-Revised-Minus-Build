@@ -1,0 +1,146 @@
+Stage Select Screen Table Data
+
+.BA<-TABLE_STAGES
+.BA->$80495D00
+.BA<-TABLE_1
+.BA->$80495D04
+.BA<-TABLE_2
+.BA->$80495D08
+.BA<-TABLE_3
+.BA->$80495D0C
+.BA<-TABLE_4
+.BA->$80495D10
+.BA<-TABLE_5
+.BA->$80495D14
+.GOTO->SkipStageTables
+
+TABLE_1:
+	byte[39] |
+0x1A, | #Temple
+0x10, | #Castle Siege
+0x1F, | #Brinstar
+0x04, | #75 m
+0x02, | #Delfino Plaza
+0x29, | #???
+0x07, | #Frigate Orpheon
+0x06, | #Norfair
+0x05, | #Rumble Falls
+0x03, | #Luigi's Mansion
+0x34, | #Final Frustration
+0x13, | #Skyworld
+0x08, | #Yoshi's Island
+0x21, | #Hyrule Castle 64
+0x15, | #New Pork City
+0x32, | #Another Destination
+0x00, | #Empty
+0x00, | #Empty
+0x00, | #Empty
+0x00, | #Empty
+0x00, | #Empty
+0x00, | #Empty
+0x1D, | #Dream Land 64
+0x27, | #Yoshi's Story
+0x0A, | #Lylat Cruise
+0x20, | #Pokemon Stadium
+0x00, | #Empty
+0x0C, | #Spear Pillar
+0x11, | #WarioWare, Inc.
+0x00, | #Empty
+0x16, | #Smashville
+0x18, | #Green Hill Zone
+0x00, | #Empty
+0x00, | #Empty
+0x22, | #Fountain of Dreams
+0x00, | #Battlefield
+0x01, | #Final Destination
+0x23, | #Brawl Minus Arena
+0x00, | #Empty
+0x00  | #Empty
+
+TABLE_2:
+	byte[39] |
+0x2F, | #Venus Lighthouse
+0x14, | #Mario Bros.
+0x1C, | #Onett
+0x30, | #Mushroom Kingdom
+0x2B, | #Corneria
+0x36, | #???
+0x0E, | #Port Town Aero Dive
+0x26, | #Rainbow Cruise
+0x31, | #Fourside
+0x2C, | #Big Blue
+0x25, | #Trophy Room
+0x2E, | #Peach's Castle 64
+0x12, | #Distant Planet
+0x09, | #Halberd
+0x33, | #Meta Crystal 64
+0x35, | #Yoshi's Island
+0x00, | #Empty
+0x00, | #Empty
+0x00, | #Empty
+0x0F, | #???
+0x00, | #Empty
+0x00, | #Empty
+0x38, | #Mushroom Kingdom II
+0x28, | #Pirate Ship
+0x2A, | #Bridge of Eldin
+0x2D, | #Mario Circuit
+0x00, | #Empty
+0x17, | #Shadow Moses Island
+0x0D, | #Summit
+0x00, | #Empty
+0x24, | #Saffron City
+0x1E, | #Hanenbow
+0x00, | #Empty
+0x00, | #Empty
+0x19, | #Pictochat
+0x1B, | #Jungle Japes
+0x0B, | #Pokemon Stadium 2
+0x0F, | #Lavendar Town
+0x00 | #Empty
+
+TABLE_3:
+	byte[6] |
+0x37, | #Training Room
+0x42, | #Lethal League
+0x43, | #King Of The Hill
+0x47, | #Fawfuls Lair
+0x46, | #Green Greens
+0x44 | #Subspace
+
+TABLE_4:	# Unused
+TABLE_5:	# Unused
+
+TABLE_STAGES:
+# Table of icon<->stage slot associations
+half[72] |	# Stage Count + 2
+| # OLD SLOTS
+0x0101, 0x0202, 0x0303, 0x0404, |
+0x0707, 0x0808, 0x0B0B, 0x0C0C, |
+0x0D0D, 0x0E0E, 0x130F, 0x1410, |
+0x1511, 0x1713, 0x1612, 0x1814, |
+0x1915, 0x1C16, 0x1D17, 0x1E18, |
+0x1F19, 0x201A, 0x211B, 0x221C, |
+0x231D, 0x241E, 0x2932, 0x2B34, |
+0x2C35, 0x2D36, 0x251F, 0x323A, |
+0x2E3B, 0x4F2F, 0x624D, 0x614C, |
+0x5742, 0x4929, 0x2F37, 0x2A33, |
+0x0909, 0x4323, 0x330A, 0x3038, |
+0x3139, 0x0606, 0x0505, 0x4828, |
+0x4B2B, 0x4C2C, 0x5030, 0x5131, |
+0x533E, 0x5641, 0x5D49, 0x373C, |
+0x634A, 0xFF61, 0xFE61, 0x4761, |
+0xF041, 0xF161, 0xEE61, 0xEF61, | 
+0xFFFF, 0xFEFE, 0x423F, 0x4340, | 
+0x4743, 0x4644, 0x4544, 0x443D |
+
+
+SkipStageTables:
+.RESET
+
+byte 39 @ $806B929C # Page 1
+byte 39 @ $806B92A4 # Page 2
+byte 06 @ $80496002 # Page 3
+byte 00 @ $80496003 # Page 4 (Unused)
+byte 00 @ $80496004 # Page 5 (Unused)
+byte 84 @ $800AF673 # Stage Count

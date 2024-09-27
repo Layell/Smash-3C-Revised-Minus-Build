@@ -1,284 +1,292 @@
-##################################
-#!Stage File System Neo [DukeItOut]
-##################################
-#	.BA<-FileFormatSetup
-#	.BA->$8053EFE0
-#	.BA<-FileNameFolder
-#	.BA->$8053EFE4
-#	.BA<-FileNameLocation
-#	.BA->$8053EFE8
-#	.BA<-FileNameLocation2
-#	.BA->$8053EFEC	
-#	.BA<-FileNameLocation3
-#	.BA->$8053CFF8	
-#	.BA<-FileNameLocation4
-#	.BA->$8053EFB4
-#	.BA<-FileNameFormat
-#	.BA->$8053EFF0
-#	.BA<-FileNameFormat2
-#	.BA->$8053EFF4
-#	.BA<-FileNameFormat3
-#	.BA->$8053CFFC	
-#	.BA<-FileNameFormat4
-#	.BA->$8053EFB0
-#	.RESET
-#	.GOTO->FileLoadCode
-#FileFormatSetup:
-#	string "%s%s%02X%s"
-#FileNameFolder:
-#	string "/stage/"
-#FileNameLocation:
-#	string "stageslot/"
-#FileNameLocation2:
-#	string "stageinfo/"	
-#FileNameLocation3:
-#	string "/sound/tracklist/"
-#FileNameLocation4:
-#	string "pf/sound/"
-#FileNameFormat:
-# 	string ".asl"
-#FileNameFormat2:
-#	string ".param"
-#FileNameFormat3:
-# 	string "%s%s.tlst"
-#FileNameFormat4:
-#	string "_b.brstm"
-## sd: 		 		@ $8059C568
-## mod folder name	@ $80406920
-## sound/tracklist_	<-$8053CFF8
-## %02X.cmm	
-#FileLoadCode:
-#HOOK @ $8094A0F8	# Stage Loading, special case for replays needed
-#{
-#	lis r12, 0x805B			# \
-#	lwz r12, 0x50AC(r12)	# | Retrieve the game mode name
-#	lwz r12, 0x10(r12)		# |
-#	lwz r4,  0x14(r12)		# | And also the scene stage mode
-#	lwz r12, 0x0(r12)		# /
-#	lis r3, 0x8070;	
-#	ori r0, r3, 0x2B60;	cmpw r0, r12;	beq skip		# Skip if this is "sqAdventure"
-#	ori r0, r3, 0x29E8; cmpw r0, r12;	beq skip		# Skip if this is "sqSingleBoss"
-#	ori r0, r3, 0x24D0; cmpw r0, r12;   bne notClassic	# This special check only applies to Classic Mode's Master Hand fight
-#Classic:
-#	cmpwi r4, 13; beq skip		# If the Master Hand fight (Stage 13), then skip this!
-#notClassic:	# Classic Mode stages other than the one above are treated more normally
-#	lwz r3, 0x40(r31)	# \ Obtain the stage ID
-#	lhz r3, 0x1A(r3)	# /
-#	lis r12, 0x8053
-#	ori r12, r12, 0xE000
-#	mtctr r12
-#	bctrl
-#skip:	
-#	lwz r12, 0x3C(r31)	# Original operation
-#}
-#HOOK @ $8010F994	# Stage Loading, earliest handled by stages, normally
-#{
-#	mr r30, r6				# Original operation
-#	lis r12, 0x8053
-#	ori r12, r12, 0xE000
-#	mtctr r12
-#	bctrl
-#skip:
-#	mr r5, r29				# Restore register 5
-#	mr r3, r27				# Restore register 3
-#	cmpwi r30, 0			# Do a test that was overruled, before	
-#}
-#HOOK @ $8117DF4C	# My Music
-#{
-#	mr r3, r7		# Stage ID
-#	lis r12, 0x8053			# \ 10-byte row dedicated to individual menu shenanigans
-#	ori r4, r12, 0xEF70		# /
-#	lis r7, 0x800B			# \
-#	ori r7, r7, 0x9EA0		# | Grab the input and store it. We'll use this to prevent the menu shortcuts from failing
-#	lhz r7, 2(r7)			# |
-#	andi. r7, r7, 0x60		# | by filtering for just the shoulder inputs and 	
-#	stw r7, 0(r4)			# /
-#	ori r12, r12, 0xE000	#
-#	ori r7, r12, 0xC		# Bypass the safety check.
-#	mtctr r7
-#	bctrl
-#	mr r3, r30		# Restore register 3
-#}
-#	
-####
-## Load Soundbank from Stage File
-#HOOK @ $8094BF6C
-#{
-#    lis r12, 0x805B
-#    lwz r12, 0x50AC(r12)
-#	lwz r12, 0x10(r12)
-#	lwz r12, 0x00(r12)
-#	lis r0, 0x8070;	ori r0, r0, 0x2B60; cmpw r0, r12; # "sqAdventure"
-#	bne %END%	# Subspace needs to ignore this for special reasons
-#	mr r3, r31	# Restore register 3	
-#	lwz r12, 0x3C(r31)		# \
-#	lwz r12, 0x74(r12)		# |
-#	mtctr r12				# | Behave like normal within subspace
-#	bctrl					# /
-#}
-#HOOK @ $8094BEEC
-#{
-#	lis r12, 0x8054			# \ Stage file
-#	lhz r3, -0xFF0(r12)		# / Soundbank ID to load @ $8054F010
-#	cmplwi r3, 0xFFFF
-#	bnelr
-#	li r3, -1
-#}
-#HOOK @ $8094BF64
-#{
-#	lis r12, 0x8054			# \ Stage file
-#	lhz r3, -0xFF0(r12)		# / Soundbank ID to load @ $8054F010
-#	cmplwi r3, 0xFFFF
-#	bne+ %END%
-#	li r3, -1
-#}
-#op NOP @ $8094BED8			# \ Suppress sound check that'd normally disable soundbanks for expansion stages
-#op NOP @ $8094BEDC			# / This isn't read by the SSE, so it is safe 
-####
-## Load Effectbank from Stage File
-#op b 0x8 @ $80949BF0
-#HOOK @ $80949BEC
-#{
-#	lis r12, 0x8054			# \ Stage file
-#	lhz r4, -0xFEE(r12)		# / Effectbank ID to load @ $8054F012
-#	stw r4, 0x94(r3)   	 	# store stage effectbank ID, not read by SSE
-#}
-####
-## Load RGBA Overlay
-## Suggested values for overlays:
-## 000000FF (0, 0, 0, 255)     for full black
-## 3C6C24B4 (60, 108, 36, 180) for Game Boy green
-## This affects characters, but not stages articles or effects
-#HOOK @ $807C9768
-#{
-#	lis r12, 0x8054			# \ Stage file RGBA settings @ $8053F00C
-#	lwz r12, -0xFF4(r12)	# / (normally uninitialized in Brawl)
-#	stw r12, 0x14A(r26)		# /
-#	andi. r12, r12, 0xFF	# Check alpha settings
-#	mr  r12, r30
-#	beq- clear				# If the alpha was clear, then behave normally and do not provide an overlay
-#	lis r4, 0x805B			# \
-#	lwz r4, 0x50AC(r4)		# | Get pointer to mode name
-#	lwz r4, 0x10(r4)		# |
-#	lwz r4, 0x4(r4)			# /
-#	lis r27, 0x8070			# \ is the mode "sqAdventure"?
-#	ori r27, r27, 0x2E50	# |
-#	cmpw r4, r27			# | Don't enable the overlay if it is.
-#	beq clear				# /
-#	li r12, 1				# Enable overlay
-#clear:
-#	stb r12, 0x14F(r26)		# Set the overlay toggle (boolean, normally 0)
-#}	
-####
-## Load Secondary Stage Name on Slots 0x13 and 0x19
-#op NOP @ $8094AB24			# Make all dual pac stages run the same code
-#HOOK @ $8094AB2C
-#{
-#	lis r4, 0x80B2			# \ Load "/STAGE/MELEE/STG"
-#	ori r4, r4, 0xC320		# /
-#}
-#HOOK @ $8094AB44
-#{
-#	lis r4, 0x8053			# \ Offset of stagenames
-#	ori r12, r4, 0xF02C		# |
-#	ori r5, r4, 0xF000		# /
-#	lwzx r4, r12, r0		# r0 is the substage ID, multiplied by 4. Load stage name
-#	lwz r12, 0x4(r5)
-#	add r4, r4, r12
-#	add r4, r4, r5
-#}	
-####
-## Code at 806BE22C determines if the stage dual loads
-## TODO: Can't create yet because of stage ID conflict with SSE. Will wait until after release to attempt to make possible
-## 			if it does get attended to.
-####
-## Flatten the stage if requested to do so
-#CODE @ $806CF6F4
-#{
-#	lis r12, 0x8054			# \
-#	lhz r12, -0xFEC(r12)	# |		
-#	andi. r0, r12, 0x1		# | Check if the stage should flatten
-#	beq- 0x14				# /
-#}
-####
-## Load a fixed camera if the STEX file indicates to
-#CODE @ $806D3A5C
-#{
-#	lis r12, 0x8054			# \
-#	lhz r12, -0xFEC(r12)	# | Check for fixed camera status
-#	andi. r0, r12, 0x2		# /
-#	beq- 0x8
-#}
-#CODE @ $806CF5E0
-#{
-#	lis r12, 0x8054			# \
-#	lhz r12, -0xFEC(r12)	# | Check for fixed camera status
-#	andi. r0, r12, 0x2		# /
-#	beq- 0x8
-#}
-#HOOK @ $80105400
-#{
-#	lis r12, 0x8054			# \
-#	lhz r12, -0xFEC(r12)	# | Check for fixed camera status
-#	andi. r4, r12, 0x2		# /
-#	li r4, 2				# Normal camera type, original operation
-#	beq+ %END% 
-#	li r4, 12				# Set it to the twelth type of camera reset for fixed camera stages when in training mode.
-#}
-####
-## Only triggers the slowdown seen on Mushroomy Kingdom, Rumble Falls and Lylat Cruise within Brawl if the STEX files suggest the stage should, 
-## rather than relying on stage ID
-#CODE @ $8094EBF4
-#{
-#	lis r12, 0x8053
-#	ori r12, r12, 0xF000
-#	lhz r3, 0x14(r12)
-#	andi. r3, r3, 0x4		# Check if the flag for a slow start is present in the param file, if it is, apply the slow start.
-#	beq+ 0x10
-#}
-#CODE @ $80951408
-#{
-#	lis r12, 0x8053
-#	ori r12, r12, 0xF000
-#	lhz r3, 0x14(r12)
-#	andi. r3, r3, 0x4		# Check if the flag for a slow start is present in the TLST, if it is, remove the slow start.
-#	beq+ 0x3C
-#}
-####
-## Brute forces stages to load a filename, even if unexpected
-#
-#CODE @ $80015568
-#{
-#	NOP; NOP; NOP
-#}
+#################################
+Stage File System Neo [DukeItOut]
 
-#############################################################
-!Stage Roster Expansion System v3.1 [Phantom Wings, DukeItOut]
-#############################################################
-# Force Regular Stages To Use Maximum Plausible Allocation, including Expansion Slots 
-
-HOOK @ $8094A1D0
+# Location of Safety Check Changed
+#################################
+	.BA<-FileFormatSetup
+	.BA->$8053EFE0
+	.BA<-FileNameFolder
+	.BA->$8053EFE4
+	.BA<-FileNameLocation
+	.BA->$8053EFE8
+	.BA<-FileNameLocation2
+	.BA->$8053EFEC	
+	.BA<-FileNameLocation3
+	.BA->$8053CFF8	
+	.BA<-FileNameLocation4
+	.BA->$8053EFB4
+	.BA<-FileNameFormat
+	.BA->$8053EFF0
+	.BA<-FileNameFormat2
+	.BA->$8053EFF4
+	.BA<-FileNameFormat3
+	.BA->$8053CFFC	
+	.BA<-FileNameFormat4
+	.BA->$8053EFB0
+	.RESET
+	.GOTO->FileLoadCode
+FileFormatSetup:
+	string "%s%s%02X%s"
+FileNameFolder:
+	string "/stage/"
+FileNameLocation:
+	string "stageslot/"
+FileNameLocation2:
+	string "stageinfo/"	
+FileNameLocation3:
+	string "/sound/tracklist/"
+FileNameLocation4:
+	string "pf/sound/"
+FileNameFormat:
+ 	string ".asl"
+FileNameFormat2:
+	string ".param"
+FileNameFormat3:
+ 	string "%s%s.tlst"
+FileNameFormat4:
+	string "_b.brstm"
+# sd: 		 		@ $8059C568
+# mod folder name	@ $80406920
+# sound/tracklist_	<-$8053CFF8
+# %02X.cmm	
+FileLoadCode:
+HOOK @ $8094A0F8	# Stage Loading, special case for replays needed
 {
-	mr r29, r3				# Original operation, places allocation size in r29
-	lis r3, 0x805B			# \
-	lwz r3, 0x50AC(r3)		# | Get pointer to mode name
-	lwz r3, 0x10(r3)		# |
-	lwz r3, 0x4(r3)			# /
-	lis r12, 0x8070			# \ is the mode "sqAdventure"?
-	ori r12, r12, 0x2E50	# |
-	cmpw r3, r12			# |	Then use the allocation it expects, don't take chances.
-	beq- %END%				# / 
-	lis r12, 0x8053			# \
-	ori r12, r12, 0xF000	# | Get reserved memory allocation from STEX system
-	lwz r3, 0x24(r12)		# /
-	cmpwi r3, 0				# \ If a value is hardcoded, use it!
-	bne- forceMemory		# /
-	cmpwi r29, -1			# \ To get more reliable memory results, the below only activates for new stage slots.
-	bne- %END%				# /
-	lis r3, 0x37			# The size of a stage should be expanded to if not already at (370000)
-forceMemory:
-	mr r29, r3				# Give it this new memory allocation size.
+	lis r12, 0x805B			# \
+	lwz r12, 0x50AC(r12)	# | Retrieve the game mode name
+	lwz r12, 0x10(r12)		# |
+	lwz r4,  0x14(r12)		# | And also the scene stage mode
+	lwz r12, 0x0(r12)		# /
+	lis r3, 0x8070;	
+	ori r0, r3, 0x2B60;	cmpw r0, r12;	beq skip		# Skip if this is "sqAdventure"
+	ori r0, r3, 0x29E8; cmpw r0, r12;	beq skip		# Skip if this is "sqSingleBoss"
+	ori r0, r3, 0x24D0; cmpw r0, r12;   bne notClassic	# This special check only applies to Classic Mode's Master Hand fight
+Classic:
+	cmpwi r4, 13; beq skip		# If the Master Hand fight (Stage 13), then skip this!
+notClassic:	# Classic Mode stages other than the one above are treated more normally
+	lwz r3, 0x40(r31)	# \ Obtain the stage ID
+	lhz r3, 0x1A(r3)	# /
+	lis r12, 0x8053
+	ori r12, r12, 0xE000
+	mtctr r12
+	bctrl
+skip:	
+	lwz r12, 0x3C(r31)	# Original operation
 }
+HOOK @ $8010F994	# Stage Loading, earliest handled by stages, normally
+{
+	mr r30, r6				# Original operation
+	lis r12, 0x8053
+	ori r12, r12, 0xE000
+	mtctr r12
+	bctrl
+skip:
+	mr r5, r29				# Restore register 5
+	mr r3, r27				# Restore register 3
+	cmpwi r30, 0			# Do a test that was overruled, before	
+}
+HOOK @ $8117DF4C	# My Music
+{
+	mr r3, r7		# Stage ID
+	lis r12, 0x8053			# \ 10-byte row dedicated to individual menu shenanigans
+	ori r4, r12, 0xEF70		# /
+	lis r7, 0x800B			# \
+	ori r7, r7, 0x9EA0		# | Grab the input and store it. We'll use this to prevent the menu shortcuts from failing
+	lhz r7, 2(r7)			# |
+	andi. r7, r7, 0x60		# | by filtering for just the shoulder inputs and 	
+	stw r7, 0(r4)			# /
+	ori r12, r12, 0xE000	#
+	ori r7, r12, 0x24		# Bypass the safety check.
+	mtctr r7
+	bctrl
+	mr r3, r30		# Restore register 3
+}
+	
+###
+# Load Soundbank from Stage File
+HOOK @ $8094BF6C
+{
+    lis r12, 0x805B
+    lwz r12, 0x50AC(r12)
+	lwz r12, 0x10(r12)
+	lwz r12, 0x00(r12)
+	lis r0, 0x8070;	ori r0, r0, 0x2B60; cmpw r0, r12; # "sqAdventure"
+	bne %END%	# Subspace needs to ignore this for special reasons
+	mr r3, r31	# Restore register 3	
+	lwz r12, 0x3C(r31)		# \
+	lwz r12, 0x74(r12)		# |
+	mtctr r12				# | Behave like normal within subspace
+	bctrl					# /
+}
+HOOK @ $8094BEEC
+{
+	lis r12, 0x8054			# \ Stage file
+	lhz r3, -0xFF0(r12)		# / Soundbank ID to load @ $8054F010
+	cmplwi r3, 0xFFFF
+	bnelr
+	li r3, -1
+}
+HOOK @ $8094BF64
+{
+	lis r12, 0x8054			# \ Stage file
+	lhz r3, -0xFF0(r12)		# / Soundbank ID to load @ $8054F010
+	cmplwi r3, 0xFFFF
+	bne+ %END%
+	li r3, -1
+}
+op NOP @ $8094BED8			# \ Suppress sound check that'd normally disable soundbanks for expansion stages
+op NOP @ $8094BEDC			# / This isn't read by the SSE, so it is safe 
+###
+# Load Effectbank from Stage File
+op b 0x8 @ $80949BF0
+HOOK @ $80949BEC
+{
+	lis r12, 0x8054			# \ Stage file
+	lhz r4, -0xFEE(r12)		# / Effectbank ID to load @ $8054F012
+	stw r4, 0x94(r3)   	 	# store stage effectbank ID, not read by SSE
+}
+###
+# Load RGBA Overlay
+# Suggested values for overlays:
+# 000000FF (0, 0, 0, 255)     for full black
+# 3C6C24B4 (60, 108, 36, 180) for Game Boy green
+# This affects characters, but not stages articles or effects
+HOOK @ $807C9768
+{
+	lis r12, 0x8054			# \ Stage file RGBA settings @ $8053F00C
+	lwz r12, -0xFF4(r12)	# / (normally uninitialized in Brawl)
+	stw r12, 0x14A(r26)		# /
+	andi. r12, r12, 0xFF	# Check alpha settings
+	mr  r12, r30
+	beq- clear				# If the alpha was clear, then behave normally and do not provide an overlay
+	lis r4, 0x805B			# \
+	lwz r4, 0x50AC(r4)		# | Get pointer to mode name
+	lwz r4, 0x10(r4)		# |
+	lwz r4, 0x4(r4)			# /
+	lis r27, 0x8070			# \ is the mode "sqAdventure"?
+	ori r27, r27, 0x2E50	# |
+	cmpw r4, r27			# | Don't enable the overlay if it is.
+	beq clear				# /
+	li r12, 1				# Enable overlay
+clear:
+	stb r12, 0x14F(r26)		# Set the overlay toggle (boolean, normally 0)
+}	
+###
+# Load Secondary Stage Name on Slots 0x13 and 0x19
+op NOP @ $8094AB24			# Make all dual pac stages run the same code
+HOOK @ $8094AB2C
+{
+	lis r4, 0x80B2			# \ Load "/STAGE/MELEE/STG"
+	ori r4, r4, 0xC320		# /
+}
+HOOK @ $8094AB44
+{
+	lis r4, 0x8053			# \ Offset of stagenames
+	ori r12, r4, 0xF02C		# |
+	ori r5, r4, 0xF000		# /
+	lwzx r4, r12, r0		# r0 is the substage ID, multiplied by 4. Load stage name
+	lwz r12, 0x4(r5)
+	add r4, r4, r12
+	add r4, r4, r5
+}	
+###
+# Code at 806BE22C determines if the stage dual loads
+# TODO: Can't create yet because of stage ID conflict with SSE. Will wait until after release to attempt to make possible
+# 			if it does get attended to.
+###
+# Flatten the stage if requested to do so
+CODE @ $806CF6F4
+{
+	lis r12, 0x8054			# \
+	lhz r12, -0xFEC(r12)	# |		
+	andi. r0, r12, 0x1		# | Check if the stage should flatten
+	beq- 0x14				# /
+}
+###
+# Load a fixed camera if the STEX file indicates to
+CODE @ $806D3A5C
+{
+	lis r12, 0x8054			# \
+	lhz r12, -0xFEC(r12)	# | Check for fixed camera status
+	andi. r0, r12, 0x2		# /
+	beq- 0x8
+}
+CODE @ $806CF5E0
+{
+	lis r12, 0x8054			# \
+	lhz r12, -0xFEC(r12)	# | Check for fixed camera status
+	andi. r0, r12, 0x2		# /
+	beq- 0x8
+}
+HOOK @ $80105400
+{
+	lis r12, 0x8054			# \
+	lhz r12, -0xFEC(r12)	# | Check for fixed camera status
+	andi. r4, r12, 0x2		# /
+	li r4, 2				# Normal camera type, original operation
+	beq+ %END% 
+	li r4, 12				# Set it to the twelth type of camera reset for fixed camera stages when in training mode.
+}
+###
+# Only triggers the slowdown seen on Mushroomy Kingdom, Rumble Falls and Lylat Cruise within Brawl if the STEX files suggest the stage should, 
+# rather than relying on stage ID
+CODE @ $8094EBF4
+{
+	lis r12, 0x8053
+	ori r12, r12, 0xF000
+	lhz r3, 0x14(r12)
+	andi. r3, r3, 0x4		# Check if the flag for a slow start is present in the param file, if it is, apply the slow start.
+	beq+ 0x10
+}
+CODE @ $80951408
+{
+	lis r12, 0x8053
+	ori r12, r12, 0xF000
+	lhz r3, 0x14(r12)
+	andi. r3, r3, 0x4		# Check if the flag for a slow start is present in the TLST, if it is, remove the slow start.
+	beq+ 0x3C
+}
+###
+# Brute forces stages to load a filename, even if unexpected
+
+CODE @ $80015568
+{
+	NOP; NOP; NOP
+}
+
+#############################################################
+Stage Roster Expansion System v3.2 [Phantom Wings, DukeItOut]
+#
+# 3.2: Modified memory allocation based on Sammi's new File
+#         Patch Code. Parameter entry now defines secondary
+#         allocation, instead. (Only needed for stages based
+#         on Mario Bros., Castle Siege, Lylat Cruise and the
+#         Stage Builder.)
+#############################################################
+                                                                                      
+
+                
+ 
+                                                                  
+                     
+                                                 
+                      
+                      
+                                                 
+                         
+                                                                           
+                   
+                      
+                                                                         
+                       
+                                                    
+                      
+                                                                                                       
+                  
+                                                                                      
+            
+                                                         
+ 
 
 # Force stage modules to load their filenames from the STEX files. WARNING! Module names can be no longer than 32 characters!!!
 HOOK @ $80043B28
@@ -397,10 +405,60 @@ SpecialCase:
 	b ModifyStageName	
 }
 
-# TODO: Force secondary stage pacs to load
+# Force secondary stage pacs to load based on the parameter
+# 806BC610
+# 805A00E0 0008 001A
+CODE @ $806BE230
+{
+	# Normally access the stage ID from 805A00E0 -> 08 -> 1A to check if Castle Siege or Lylat Cruise
+	lis r12, 0x8054			# Get Dual Load flag at 80530015
+	lbz r12, -0xFEB(r12)	#
+	andi. r12, r12, 8		# Bit flag relevant
+	beq+ 0x10				# Skip setting Dual Load flag!
+}
+CODE @ $8094AC1C
+{
+	# Normally access the stage ID from 0x40(r3) -> 1A
+	lis r12, 0x8054			# Get Dual Load flag at 80530015
+	lbz r12, -0xFEB(r12)	#
+	andi. r12, r12, 8		# Bit flag relevant
+	beq+ 0x258				# Skip setting Dual Load behavior!
+}
+HOOK @ $806BE22C
+{
+	lhz r0, 0x1A(r3)		# Original operation. Get stage slot ID
+	cmpwi r0, 0x28			# Is this the results screen? 
+	bne NormalStage
+	lis r12, 0x806B
+	ori r12, r12, 0xE24C
+	mtctr r12
+	bctr					# If it is, it is not a dual-load stage!
+NormalStage:
+}
 
-# TODO: Address stage-specific memory allocation:
-#
+# TODO: Address secondary pac shuffling for Lylat Cruise. Currently checks for substage count at 8094AEA4???
+# TODO: Address secondary pac being randomized.
+
+# Force Regular Stages To Use Secondary Allocation when needed. (See Mario Bros, Lylat Cruise, Castle Siege)
+HOOK @ $80949F40
+{
+	lis r3, 0x805B			# \
+	lwz r3, 0x50AC(r3)		# | Get pointer to mode name
+	lwz r3, 0x10(r3)		# |
+	lwz r3, 0x4(r3)			# /
+	lis r12, 0x8070			# \ is the mode "sqAdventure"?
+	ori r12, r12, 0x2E50	# |
+	cmpw r3, r12			# |	Then use the allocation it expects, don't take chances.
+	beq- SSE				# / 
+	lis r12, 0x8054			# \ Get reserved memory allocation from STEX system at 8053F024
+	lwz r3, -0xFDC(r12)		# /
+	cmpwi r3, 0				# \ If a value is hardcoded, use it!
+	bnelr-					# / 
+SSE:
+Normal:
+	cmplwi r0, 39		# Original operation
+}
+
 
 #80949F38 special cases for:
 #39/0x27	?????
@@ -412,7 +470,7 @@ SpecialCase:
 #default: r3 = 0x2000
 
 # Below is a temp fix until I make the above modular
-op cmplwi r0, 5 @ $80949FC0	# Normally 0x1F (Famicom), allows Mario Bros to load properly from Metal Cavern
+# op cmplwi r0, 5 @ $80949FC0	# Normally 0x1F (Famicom), allows Mario Bros to load properly from Metal Cavern
 
 # Miscellaneous stage ID 
 .alias WarioWare = 0x4D
@@ -421,7 +479,7 @@ op cmplwi r0, WarioWare @ $80989324 # Make sure that taunting is seen by WarioWa
 op cmplwi r0, WarioWare @ $80988A70	# Make sure movement is seen by WarioWare
 
 ##########################################################################
-![Legacy TE] Stage Modules Are Portable Without Modification V2 [DukeItOut]
+[Legacy TE] Stage Modules Are Portable Without Modification V2 [DukeItOut]
 ##########################################################################
 address $80B8A554 @ $80B8A4D0
 address $80B8A564 @ $80B8A504
@@ -442,7 +500,9 @@ unusual:				//Those two stage types demand hardcoded pointers
 }	
 	
 ########################################################
-!Custom Stage SD File Loader [DukeItOut]
+Custom Stage SD File Loader [DukeItOut, Replay Fix by Kapedani]
+# 
+# This version forces stage reloading if a flag is set, as well as uses the flag to determine if it's a replay
 #
 # Requires CMM SD File Saver
 #
@@ -451,8 +511,15 @@ unusual:				//Those two stage types demand hardcoded pointers
 CODE @ $8053E000
 {
 	lhz r0, 0xFB8(r12)
+	lis r10, 0x8054
+    lbz r10, -0xFFD(r10)
+	cmpwi r10, 0x52			# If start of replays stage flag is on (STER) (flag turns off when stage gets loaded)
+	beq Reload
+	cmpwi r10, 0x21         # If end of match and endless friendlies stage load stage flag is on (STE!) (flag turns off when stage gets loaded)
+	beq Reload
 	cmpw r3, r0
-	beqlr-					# Don't reload multiple times!
+	beqlr+					# Don't reload multiple times!
+Reload:
 	sth r3, 0xFB8(r12)
 	stwu r1, -0x130(r1)
 	mflr r0
@@ -462,6 +529,7 @@ CODE @ $8053E000
 	ori r12, r12, 0x12EC	# |
 	mtctr r12				# | preserve registers r14-r31
 	bctrl					# /
+	mr r17, r10
 	lis r12, 0x8053
 	ori r12, r12, 0xF000
 	lis r28, 0x800B 
@@ -500,23 +568,23 @@ CODE @ $8053E000
 
 	lhz		r16, 2(r28)			# / Get the input assigned
 	lhz 	r3, 0(r28)			# Get access to the stage ID
-    lhz     r17, -4(r28)      #\ 
-    cmplwi  r17, 0x815E       # |
-    bne-    ClassicAllStar    # | Replays require different info
-    lhz     r17, -2(r28)      # |
-    cmplwi  r17, 0x83E4       # |
+                                 
+                                 
+    cmpwi 	r17, 0x52		  #\ Replays require different info
+                                 
+                                 
     bne+    Multiplayer       #/
 Replay:
     lis     r16, 0x9130       #\  Ignore real inputs and only receive them from the replay info.
     lhz     r16, 0x1F4A(r16)  # | Replays insert them into 91301F4A
     sth     r16, 2(r28)       #/
 Multiplayer:    
-ClassicAllStar:	
-	lis r12, 0x8053
-	ori r12, r12, 0xF000
-	lhz r23, 4(r12)			# \ Get the slot count
+                
+	lis r22, 0x8053
+	ori r22, r22, 0xF000
+	lhz r23, 4(r22)			# \ Get the slot count
 	mtctr r23 				# /
-	addi r23, r12, 8		# Get to the list of inputs and title offsets
+	addi r23, r22, 8		# Get to the list of inputs and title offsets
 	li r26, 0				# Choice-checking
 	li r29, 0				# Most accurate choice, defaulting to the start
 	li r21, 0				# How many inputs it shares
@@ -546,10 +614,21 @@ bitSet:
 not_found:	
 	addi r26, r26, 4
 	bdnz+ loop
+slotFound:
+    cmpwi r3, 0x28          # Do not save results
+    beq DoNotSaveASL
+    addi r23, r22, 8		# \ Get to the list of inputs and title offsets
+    lhzx r25, r23, r29      # /
+    sth r25, 2(r28)         # Store in alt stage helper ASL loc
+    lis r11, 0x815F         # \ Store in ALT_STAGE_VAL_LOC
+    sth r25, -0x7BDE(r11)   # /
+    lis r11, 0x9135         # \ Store in CURRENT_ALT_STAGE_INFO_LOC
+    stw r25, -0x3700(r11)   # /
+DoNotSaveASL:
 	addi r29, r29, 0xA		# \ pass the 8-byte header and add 2 to get the offset instead of input
-	lhzx r29, r12, r29		# /
-	lhz r23, 6(r12)			# \ Get offset to param file names
-	add r23, r23, r12		# /
+	lhzx r29, r22, r29		# /
+	lhz r23, 6(r22)			# \ Get offset to param file names
+	add r23, r23, r22		# /
 	add r23, r23, r29		# Get the title address
 	lis r12, 0x8053			# Stage files write to 8053F000
 	ori r12, r12, 0xF000	#	
@@ -644,12 +723,13 @@ FinishedTracklistLoading:
 }
 
 #######################################################################
-!If No Song Titles Are Found, Obtain Them From The TLST File [DukeItOut]
+If No Song Titles Are Found, Obtain Them From The TLST File [DukeItOut]
 #######################################################################
 .alias tlstHeaderSize = 0xC		# Data block size for the header
 .alias tlstSongSize = 0x10		# Data block size for each available song
 # 
 op b -0x158 @ $800DE81C # Go to below
+op li r5, -2 @ $800DE6D4
 # Force it to read for a title, even if the title section isn't present in the info pac file
 HOOK @ $800DE6C4
 {
@@ -673,7 +753,7 @@ HOOK @ $800DE6C4
 forceRead:
 	lwz r3, 0x164(r30)
 	li r4, 0
-	li r5, -1
+	li r5, -2
 	lis r12, 0x800D
 	ori r12, r12, 0xE6D8
 	mtctr r12
@@ -687,24 +767,24 @@ wasFound:
 HOOK @ $800B91F0 
 {
 	li r3, 0		# Normally tells it that it is false
-	lwz r12, 0(r1)	# \
-	lwz r12, 0(r12)	# | Try to determine the code that called this.
-	lwz r12, 0(r12) # |
-	lwz r12, 4(r12) # /
-	lis r5, 0x8095			# \
-	ori r5, r5, 0x1214		# | Check if this is a 1-P battle starting
-	cmpw r12, r5			# |
-	beq+ enteringBattle		# /
-	lis r5, 0x8095			# \
-	ori r5, r5, 0x11D8		# | Check if a countdown is starting
-	cmpw r12, r5			# |
-	beq+ enteringBattle		# /
-	lwz r12, 0(r1)			# \ 
-	lwz r12, 4(r12)			# / Check again.
-	lis r5, 0x8117			# \
-	ori r5, r5, 0xF428		# | Check if this is My Music
-	cmpw r12, r5			# |
-	bne+ %END%				# /
+	cmpwi r5, -2	# Check if this is a custom tracklist title request
+                                                                
+                    
+                    
+                     
+                                                               
+                   
+                         
+                     
+                                                         
+                   
+                         
+                      
+                                   
+                     
+                                                  
+                   
+	bne+ %END%		# 
 entertingMyMusic:
 enteringBattle:
 
@@ -794,10 +874,12 @@ finishProcess:
 	li r3, 1				# Force it to assume it is successful
 }
 # Force My Music to load titles from the TLST (modified by Desi to remove song limit on My Music)
+#
+# Fixed issue where altering the My Music menu too extensively would break compatibility with this code
 HOOK @ $8117F418
 {
-	lis r4, 0x8152				#\Get Song ID, but load from 8053F200 instead of 81521880
-	ori r4, r4, 0x1880			#|
+	addi r4, r3, 0x40			#\Get Song ID, but load from 8053F200 instead of 81521880
+                        
 	subf r4, r4, r25			#|
 	mulli r4, r4, 0x4			#|
 	lis r5, 0x8053				#|
@@ -807,7 +889,7 @@ HOOK @ $8117F418
 	lis r4, 0x8054				# \ Place the song ID
 	stw r5, -0x102C(r4)			# /	
 	li r4, 0					#
-	li r5, -1					# Activate behavior acknowledging no title file
+	li r5, -2					# Activate behavior acknowledging no title file
 }
 
 # Redirect the title information to the TLST
@@ -951,11 +1033,11 @@ forceSkip:
 	mr r5, r29	# Restores song ID, original operation
 }
 	
-#.include Source/codes/Project+/MyMusic.asm		# Integrated heavily into the above!
-.include Source/codes/Project+/Random.asm			# Custom random code to load expansion and non-striked slots, properly
+.include Source/Codes/Project+/MyMusic.asm		# Integrated heavily into the above!
+.include Source/Codes/Project+/Random.asm			# Custom random code to load expansion and non-striked slots, properly
 
 #####################################################################################################
-![Legacy TE] Hold Y on Smashville to Guarantee a Concert V2 (requires ASL Helper and SFSN) [DukeItOut]
+[Legacy TE] Hold Y on Smashville to Guarantee a Concert V2 (requires ASL Helper and SFSN) [DukeItOut]
 #####################################################################################################
 HOOK @ $8010FBC4
 {
@@ -972,7 +1054,7 @@ HOOK @ $8010FBC4
 noConcert:
 }
 ##########################################################
-!KK Concert Music Only Triggers Via TLST File [DukeItOut]
+KK Concert Music Only Triggers Via TLST File [DukeItOut]
 # 
 # Makes music only trigger KK Concert songs when holding Y
 #
@@ -988,7 +1070,7 @@ noConcert:
 op b 0x15C @ $8010FCC4
 
 ###########################################################################
-!Metal Cavern and Online Training Room Can Use Custom Tracklists [DukeItOut]
+Metal Cavern and Online Training Room Can Use Custom Tracklists [DukeItOut]
 ###########################################################################
 op NOP 		@ $8010FBB0
 op NOP	 	@ $8010FE08
@@ -1001,10 +1083,16 @@ op b -0x4	@ $8010FDFC		# Makes Slot
 # 8010FE18 sets ID 2712 Break the Targets
 
 #######################################################################################
-SSSRES:Stage Selection Screen Roster Expansion System (RSBE.Ver) v1.1 [JOJI, DukeItOut]
+SSSRES:Stage Selection Screen Roster Expansion System (RSBE.Ver) v1.2 [JOJI, DukeItOut]
 #
 # 1.1: fixed issue where page 3 wouldn't load all stages if page 1 had less, overall
+# 1.2: fixed issue where the wrong button was displayed when no custom stages 
+#			were present
 #######################################################################################
+.alias MaxPages = 3			# Amount of normal expansion stage pages
+.alias BackFrame = 4		# Frame that the last page will use to indicate the next is page 1
+.alias CustomFrame = 3		# Frame for the Stage Builder
+
 HOOK @ $806B1F04				# Forces it to fill the amount of stage slots to max possible to avoid an error with expansion pages
 {
 	li r3, 39					# \ Use this as a max possible for a page. Do not raise above this!
@@ -1054,16 +1142,27 @@ loc_0x64:
 }
 HOOK @ $806B2310		# Updates the page number texture icon
 {
-	lis r3, 0x8049		# \ Page Number as is observed by the new SSS system
-	lbz r0, 0x6000(r3)	# /
+	lis r12, 0x8049		# \ Page Number as is observed by the new SSS system
+	ori r12, r12, 0x6000#
 	lwz r3, 0x228(r29)	# Page Number as is observed by Brawl
 	cmpwi r3, 2			# Is it the Brawl custom stage page?
-	bne+ normalStage
-	li r3, 4
-	b %END%
-normalStage:
-	mr r3, r0			# \ Unorthodox increment due to limitations of register 0
-	addi r0, r3, 1		# /
+	beq- LastPage
+	lwz r5, 0x604C(r29)	# Amount of stage builder stages available
+	cmpwi cr1, r5, 0	# Check if there are zero
+	
+	li r4, 2			# Max amount of normal pages in Brawl
+	lbz r5, 0x0(r12)	# Active Page
+	lbz r3, 0x2(r12); cmpwi r3, 0; beq- notAny; addi r4, r4, 1 # Amount of stages on page 3 (if any)
+	lbz r3, 0x3(r12); cmpwi r3, 0; beq- notAny; addi r4, r4, 1 # Amount of stages on page 4 (if any)
+	lbz r3, 0x4(r12); cmpwi r3, 0; beq- notAny; addi r4, r4, 1 # Amount of stages on page 5 (if any)
+notAny:	
+	addi r0, r5, 1
+	cmpw r0, r4			# If this isn't relevant due to being less than the latest normal page
+	blt %END%			# Then don't bother.
+	li r0, CustomFrame
+	bne- cr1, %END%		# Don't have the button point to a stage builder page if nothing is on it!
+LastPage:
+	li r0, BackFrame
 }
 HOOK @ $806B3834		# Updates the page number texture icon, but every frame
 {
@@ -1081,8 +1180,8 @@ HOOK @ $806B0AB8
 {
   stw r30, 0x228(r29)		# Original operation
   lis r16, 0x8049			# \
-  ori r16, r16, 0x6000		# | Set page number
-  stb r30, 0(r16)			# /
+  stb r30, 0x6000(r16)		# / Set page number
+                       
 }
 
 HOOK @ $806B5910
@@ -1119,39 +1218,39 @@ HOOK @ $806B8F60
 }
 
 op li r0, 4 @ $806B50B0
-HOOK @ $806B41C8
-{
-  lis r16, 0x8049
-  ori r16, r16, 0x6000
-  li r15, 0x4												# \
-  lbz r17, 0x4(r16);  cmpwi r17, 0x0;  bne- loc_0x3C		# / Skip page 5 if it has no additions
-  li r15, 0x3												# \
-  lbz r17, 0x3(r16);  cmpwi r17, 0x0;  bne- loc_0x3C		# / Skip page 4 if it has no additions
-  li r15, 0x2												# \
-  lbz r17, 0x2(r16);  cmpwi r17, 0x0;  bne- loc_0x3C		# / Skip page 3 if it has no additions
-  li r15, 0x1												# Page 2 is the highest it will go to if the above 3 are deemed empty.
+                
+ 
+                 
+                      
+                            
+                                                                                            
+                            
+                                                                                            
+                            
+                                                                                            
+                                                                                               
 
-loc_0x3C:
-  lbz r17, 0xC(r16);  cmpw r17, r15;  bne- loc_0x50			
-  li r17, 0x0												# Set page button back to 0 if at the highest one.
-  b loc_0x54
+         
+                                                      
+                                                                           
+            
 
-loc_0x50:
-  addi r17, r17, 0x1										# Increment page button texture
+         
+                                                             
 
-loc_0x54:
-  stb r17, 0xC(r16)											# 8049600C contains page animation value as a byte
-  subi r30, r30, 0x6FE8										# Different from the original operation for unknown reasons
-}
+         
+                                                                                
+                                                                                            
+ 
 
-HOOK @ $806B36C0
-{
-  stw r0, 0x224(r30)		# Original operation.
-  lis r16, 0x8049			# \
-  ori r16, r16, 0x6000		# |
-  li r17, 0xFF				# | Set to invalid value in certain contexts 
-  stb r17, 0xE(r16)			# /
-}
+                
+ 
+                                           
+                       
+                           
+                                                               
+                         
+ 
 
 ############################################
 Expansion Stages in All-Star Fix [DukeItOut]
@@ -1167,8 +1266,29 @@ HOOK @ $806E3D2C
 }
 byte 0x58 @ $8070294D	# "X"
 
+############################
+Crush anywhere anytime [Eon] 
+############################
+op nop @ $8083b1ac 
+
+#####################################################################################
+Crush effect in ef_StgBattleField outside of SSE [DukeItOut]
+#
+#Requires a special ef_StgBattleField pac file to be included in the stage to show up
+#Requires "Crush anywhere anytime [Eon]" to function
+#####################################################################################
+HOOK @ $8087C838
+{
+	ori r4, r4, 18		# Get SSE effect
+	lis r3, 0x80B8
+	lwz r3, 0x7C28(r3)
+	lbz r0, 0x68(r3)
+	cmplwi r0, 1; beq+ %END% 	# Branch if in SSE
+	lis r4, 0x32; ori r4, r4, 1		# First effect ID in ef_StgBattlefield 
+}
+
 ############################################################################
-!Stage Builder Can Not Save to Wii NAND [DukeItOut]
+Stage Builder Can Not Save to Wii NAND [DukeItOut]
 #
 # Prevents getting accidentally locked out of booting
 # hackless method from saving to the Wii instead of the SD card.
@@ -1193,7 +1313,7 @@ HOOK @ $800F3B4C
 }
 
 ##############################################
-!Universal Stage Camera Speed: 2.0 [DukeItOut]
+Universal Stage Camera Speed: 2.0 [DukeItOut]
 #
 # This code makes having a consistent camera
 # across the entirety of a build much easier.
@@ -1207,8 +1327,8 @@ HOOK @ $800F3B4C
 ##############################################
 HOOK @ $8009D0C0
 {
-    lis r12, 0x4000         # \ 2.0 (0x40000000) in PM
-    ori r12, r12, 0x0000    # / This operaton is technically not necessary for this specific value, but it is left here for user customization convenience.
+    lis r12, 0x3fb3       # \ 2.0 (0x40000000) in PM
+    ori r12, r12, 0x3333    # / This operaton is technically not necessary for this specific value, but it is left here for user customization convenience.
     stw r12, 0xB8(r3)       # sets Camera Speed from PAC, used to do so from f2
 }
 
@@ -1230,146 +1350,8 @@ CODE @ $800B91C8
 	mr r30, r5
 	mr r29, r3
 	cmpwi cr2, r5, -1
-	beq- cr2, 0x14		
+	ble- cr2, 0x14		
 }
-
-.BA<-TABLE_STAGES
-.BA->$80495D00
-.BA<-TABLE_1
-.BA->$80495D04
-.BA<-TABLE_2
-.BA->$80495D08
-.BA<-TABLE_3
-.BA->$80495D0C
-.BA<-TABLE_4
-.BA->$80495D10
-.BA<-TABLE_5
-.BA->$80495D14
-.GOTO->SkipStageTables
-
-TABLE_1:
-	byte[39] |
-0x1A, | #Temple
-0x11, | #WarioWare, Inc.
-0x1F, | #Brinstar
-0x04, | #75 m
-0x02, | #Delfino Plaza
-0x29, | #???
-0x07, | #Frigate Orpheon
-0x06, | #Norfair
-0x05, | #Rumble Falls
-0x03, | #Luigi's Mansion
-0x34, | #Final Frustration
-0x13, | #Skyworld
-0x08, | #Yoshi's Island
-0x21, | #Hyrule Castle 64
-0x15, | #New Pork City
-0x0C, | #Spear Pillar
-0x00, | #Empty
-0x00, | #Empty
-0x00, | #Empty
-0x00, | #Empty
-0x00, | #Empty
-0x00, | #Empty
-0x1D, | #Dream Land 64
-0x27, | #Yoshi's Story
-0x0A, | #Lylat Cruise
-0x20, | #Pokemon Stadium
-0x00, | #Empty
-0x10, | #Castle Siege
-0x09, | #Halberd
-0x00, | #Empty
-0x16, | #Smashville
-0x0F, | #Lavendar Town
-0x00, | #Empty
-0x00, | #Empty
-0x22, | #Fountain of Dreams
-0x00, | #Battlefield
-0x01, | #Final Destination
-0x0B, | #Pokemon Stadium 2
-0x00, | #Empty
-0x00  | #Empty
-
-TABLE_2:
-	byte[39] |
-0x2F, | #Venus Lighthouse
-0x14, | #Mario Bros.
-0x1C, | #Onett
-0x30, | #Mushroom Kingdom
-0x2B, | #Corneria
-0x36, | #???
-0x0E, | #Port Town Aero Dive
-0x26, | #Rainbow Cruise
-0x31, | #Fourside
-0x2C, | #Big Blue
-0x25, | #Trophy Room
-0x2E, | #Peach's Castle 64
-0x12, | #Distant Planet
-0x32, | #Lavaville
-0x33, | #Meta Crystal 64
-0x35, | #Yoshi's Island
-0x00, | #Empty
-0x00, | #Empty
-0x00, | #Empty
-0x0F, | #???
-0x00, | #Empty
-0x00, | #Empty
-0x38, | #Mushroom Kingdom II
-0x28, | #Pirate Ship
-0x2A, | #Bridge of Eldin
-0x2D, | #Mario Circuit
-0x00, | #Empty
-0x17, | #Shadow Moses Island
-0x0D, | #Summit
-0x00, | #Empty
-0x24, | #Saffron City
-0x1E, | #Hanenbow
-0x00, | #Empty
-0x00, | #Empty
-0x19, | #Pictochat
-0x1B, | #Jungle Japes
-0x23, | #Yoshi's Island
-0x18, | #Green Hill Zone
-0x00 | #Empty
-
-TABLE_3:
-TABLE_4:	# Unused
-TABLE_5:	# Unused
-
-TABLE_STAGES:
-# Table of icon<->stage slot associations
-half[57] |	# Stage Count + 2
-| # OLD SLOTS
-0x0101, 0x0202, 0x0303, 0x0404, |
-0x0707, 0x0808, 0x0B0B, 0x0C0C, |
-0x0D0D, 0x0E0E, 0x130F, 0x1410, |
-0x1511, 0x1713, 0x1612, 0x1814, |
-0x1915, 0x1C16, 0x1D17, 0x1E18, |
-0x1F19, 0x201A, 0x211B, 0x221C, |
-0x231D, 0x241E, 0x2932, 0x2B34, |
-0x2C35, 0x2D36, 0x251F, 0x323A, |
-0x2E3B, 0x4F2F, 0x624D, 0x614C, |
-0x5742, 0x4929, 0x2F37, 0x2A33, |
-0x0909, 0x4323, 0x330A, 0x3038, |
-0x3139, 0x0606, 0x0505, 0x4828, |
-0x4B2B, 0x4C2C, 0x5030, 0x5131, |
-0x533E, 0x5641, 0x5D49, 0x373C, |
-0x634A |
-
-
-SkipStageTables:
-.RESET
-
-byte 39 @ $806B929C # Page 1
-* 29692362 000016A0
-byte 38 @ $806B92A4 # Page 2
-* E2100000 00000000
-byte 39 @ $806B92A4 # Page 2
-* E0000000 80008000
-byte 00 @ $80496002 # Page 3
-byte 00 @ $80496003 # Page 4 (Unused)
-byte 00 @ $80496004 # Page 5 (Unused)
-byte 78 @ $800AF673 # Stage Count
 
 op lis r4, 0x8049 		@ $800AF58C
 op lwz r4, 0x5D00(r4)	@ $800AF594
@@ -1381,3 +1363,7 @@ op lis r4, 0x8049		@ $800AF6A0
 op lwz r4, 0x5D00(r4)	@ $800AF6A8
 op lis r4, 0x8049		@ $800AF6D8
 op lwz r4, 0x5D00(r4)	@ $800AF6E0
+
+.include Source/Codes/Minus/StageTable.asm
+
+
