@@ -2323,6 +2323,19 @@ Grabboxes work out of any action [Eon]
 op nop @ $8083D250
 op nop @ $8083D25C
 
+Game and Watch Costume Code [Sammi Husky, Desi] (TE numbering (00-19/20-29/30+) by MarioDox)
+* C284D0A4 0000000A
+* 2C1F0012 40820040
+* 90E102F0 A0E6FFFB
+* 2C073030 4082002C
+* 2C170014 41800008
+* 38E03031 2C17001E
+* 41800008 38E03032
+* 2C170028 41800008
+* 38E03033 B0E6FFFB
+* 80E102F0 38800003
+* 60000000 00000000
+
 #.include Source/codes/Project+/StageEX.asm
 .include Source/codes/Project+/StageFiles.asm
 .include Source/codes/Project+/CustomRequirements.asm
