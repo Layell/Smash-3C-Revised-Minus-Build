@@ -13,3 +13,4 @@ Known Issues:
 -Some expanded costumes may not have additional effects on certain animations such as ROB and Sonic
 
 If you are aware of any other issues, please report them to the Smash 3C server, however be sure to check it's not an existing Brawl- issue. I cannot promise any issues will be resolved.
+
