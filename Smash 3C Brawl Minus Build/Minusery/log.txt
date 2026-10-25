@@ -1,0 +1,461 @@
+AXNextFrame -> VBI Hook Switch After Strap Screen v1.1 [Magus, Sammi-Husky]
+Boot Directly to CSS v5.1  (Hold Shield for training) [PyotrLuzhin, SammiHusky]
+Reset multipac stage lock status between Classic & All-Star matches [wiiztec]
+Stock/Frame Control not disabled in 300% Mode 1.1 [wiiztec]
+Disable Custom Stages
+3D Characters on Hanenbow
+Special Mode flags clear [wiiztec]
+Poke Balls use Normal Item Limit [standardtoaster]
+Memory Extention for FighterXResource2 [Dantarion]
+Memory Extension for CommonResource [Sammi-Husky]
+Stage Choice Random Fix [ds22]
+Ragequit Accelerator [InternetExplorer]
+Sudden Death Port Fix (Requires Analog C-Stick, L R, & Light-Shield Button Stored as Variables v2.1) [ds22]
+1 Player Matches in Time Mode only [InternetExplorer]
+1 Team Matches [spunit262]
+Online Handicap Disable [spunit262]
+Training Room Item Fix [ds22]
+Infinite Replays
+Allow Pausing When Set to Off v3 [standardtoaster]
+Match Loss Clears Pause Address [standardtoaster]
+Match Win Clears Pause Address [standardtoaster]
+Pause Set to Off -> Hold Start to Pause v2 [standardtoaster]
+Allow 2x Speed Setting in Training [Magus]
+Unrestricted Pause Camera
+Unrestricted Replay Camera
+Default Settings Modifier [Igglyboo, Brkirch, and FMK]
+[Legacy TE] Disable Challenger Approaches [ds22]
+[Legacy TE] CPUs can attack each other in Training Mode [Fracture]
+[Legacy TE] Set the number of CPUs to 0 in Training Mode [Sarrg]
+[Legacy TE] Target Smash levels fix [DukeItOut]
+Load Common2.pac from the SD card [DukeItOut, Minus path by KingJigglypuff]
+[Legacy TE] Always use PACs instead of PCS files [DukeItOut]
+[Legacy TE] Display Stack Trace, Instruction, and Address Upon Crashing [UnclePunch, Fracture] (internal crash fix by Eon)
+Effect.pac Roster Expansion System (RSBE.Ver) V2 (Costume-Specific Etc File Support) [JOJI, DukeItOut]
+[Project+] Turbo item does not fire curry shots in any mode [DukeItOut]
+[Project+] Stickers do not randomly drop [DukeItOut]
+[Project+] Item Frequency None if all items turned off and Items spoofed off if item frequency None  [Eon]
+[Project+] Disable Smash Balls during Classic's Team <Character> Battles [DukeItOut]
+Subspace uses same Internal Constants as Versus [Eon]
+Unrestricted Control Editing [spunit262]
+Source/codes/ProjectM/ButtonPresses.asm
+	C-Stick Set to Attack or Special Doesn't Also Input Jump [Magus]
+Source/codes/ProjectM/CloneEngine.asm
+	Clone Engine Data Saving Fix [ds22]
+	Clone Engine Corps Stock Fix + BrawlEX Corps Fix v1 + Exception Macro [ds22, Desi]
+	Mewtwo Fixes [Dantarion, ds22]
+	Lucario Clone Aura Sphere GFX Fix [Dantarion, ds22, DesiacX]
+	Kirby Lucario Clone Aura Sphere GFX Fix [ds22, DesiacX, Eon]
+	Lucario Clone Aura Sphere Bone ID Fix [Dantarion, ds22, PyotrLuzhin, Yohan1044, KingJigglypuff, Desi]
+	Lyn Fixes [ds22]
+	Samus Clone Charge Shot setup [Eon]
+	Classic and All-Star Ending Choice Engine v1.1d [DukeItOut]
+	Clone Classic & All-Star Result Data V1.21 [ds22, Dantarion, DukeItOut]
+	BrawlEx Classic/All-Star Cosmetic ID Fix [KingJigglypuff]
+Source/codes/ProjectM/CustomAI.asm
+	CPU DI fix [Bero]
+	CPUs Don't Ignore Other CPUs to Target Humans [Magus]
+	Custom AI Function Loader [Magus]
+	Custom AI Functions [Magus]
+	Custom AI Requirement Loader[Bero]
+	Custom AI Requirement Table[Bero]
+	req Equal  0x1020 lhs rhs[Bero]
+	req IsStage  0x1021 ID[Bero]
+	Custom AI Command Loader[Bero]
+	Custom AI Command Table[Bero]
+	cmd RetrieveATKD  0x33 variable subaction opponent[Bero]
+	CPU falls from respawn plane when Turbo[Bero]
+	Ledge hanging/Lying routine injection(ledge0x2060, lying0x2070)[Bero]
+	CE AI Input Fix [ds22]
+Source/codes/ProjectM/Events.asm
+	Event Status3=Turbo [Bero]
+	Event Match 4 Rule Fix [ds22, Eternal Yoshi]
+	The Bowser Challenge Rule Fix [Eternal Yoshi]
+	Event Match 16 (Power Suit ON!) Can Be Completed As A Normal Event [Kapedani]
+	Event Match 17 (Waterfall Climb) Is Now A Time Record Event [Kapedani]
+Source/codes/ProjectM/Handicap.asm
+	Ignore Handicap [Y.S.]
+	Set default handicap [Sammi Husky]
+	Buffer Scale = Handicap Scale v2.0 [Y.S., Phantom Wings, Sammi Husky]
+Source/codes/ProjectM/SpecialModes/AllStarVs.asm
+	Brawl- All-Star Versus 1.321 [wiiztec]
+	ASV improper respawn 1.0 [wiiztec] (replace proper respawn)
+Source/codes/ProjectM/SpecialModes/RandomElement.asm
+	[Legacy TE] Random Element Mode (Over Flower mode) 2.0 [PyotrLuzhin, Eon]
+Source/codes/ProjectM/SpecialModes/Rules.asm
+	[Minus] Special modes rules menu change cosmetics 4.0 [wiiztec]
+Source/codes/ProjectM/SpecialModes/Stamina.asm
+	P+ Stamina 5.0 [wiiztec,DukeitOut, ReplayFix by Eon]
+	P+ Stamina X/Y world wrap option 5.3 [wiiztec,Phantom Wings,Magus]
+	[Legacy TE] New DBZ Lite with camera stabilization 2.0 [wiiztec] [wiiztec,Yohan1044] (write non-zero value to 9018F387 to toggle off)
+	Throws Don't Cut Early for Victim Damage in Stamina [codes, DukeItOut]
+Source/codes/ProjectM/SpecialModes/Turbo.asm
+	Turbo Mode - On Hit Interrupts v1.2 [Magus, Dantarion, standardtoaster, DukeItOut]
+	Turbo Mode - Turbo Cleared in Normal Allow Interrupt [Magus]
+	Turbo Mode - Repeat Action Change v1.2 [Magus]
+	Turbo Mode - Disable Curry Wait and Run [Magus]
+	Turbo Mode - Curry Special Brawl Uses Curry Aura [Magus]
+	Turbo Mode - Curry Special Brawl Doesn't Exclude Nana [Magus]
+	Super Spicy Curry has no SFX [standardtoaster]
+Source/codes/LegacyTE/ASLHelper.asm
+	[Legacy TE] ASL Helper for Solo Modes, SFX/GFX, and Replays V1.1 [DukeItOut]
+Source/codes/LegacyTE/CPU.asm
+	[Legacy TE] Default CPU level is 9 v2 [codes]
+	Random CPU DI v1.2
+	Fix Lv9 CPUs [(Mr AI) SLuigi123, Fudgepop01]
+Source/codes/LegacyTE/LoadFlags.asm
+	[Legacy TE] New Load Flag Commands For Etc 1.2 [DukeItOut]
+Source/codes/LegacyTE/UnboundedTeamEngine.asm
+	[Legacy TE] Unbounded Team Color Engine EX Variant [DukeItOut, DesiacX]
+Source/codes/Project+/Articles.asm
+	Unstoppable articles Redone [Eon, catscatscats99]
+	Save Angle of Collided Platform of Aura Sphere (LA-Float[25]) [Eon]
+	Save Angle of Collided Wall of Aura Sphere [Eon] 
+Source/codes/Project+/CompressPAC.asm
+	Costume PAC files can be compressed V2 [DukeItOut]
+	Character Costumes are decompressed in the Network Heap [Kapedani, DukeItOut]
+	Bowser and Giga Bowser Can Be Compressed [DukeItOut]
+	Only New Characters Need a Spy Costume Added [DukeItOut]
+Source/codes/Project+/FilePatchCode.asm
+	File Patch Code REDUX v0.95 (/Minusery) [Sammi Husky]
+	Source/codes/P+Ex/ReplacementSoundbankEngine.asm
+		[Project+] RSBE v1.40 (/Minusery/pf/sfx, can load soundbank clones for stages and items) (requires CSSLE) [InternetExplorer, DukeItOut, QuickLava, Kapedani]
+	SDHC Extension 1.1[Bero]
+Source/codes/P+Ex/WaveIDIntercept.asm
+	Override RWSD WAVE ID via Info Index v1.8.0 [QuickLava]
+Source/codes/Project+/IndependentSub.asm
+	[Minus] Independent Subroutines [Mawootad]
+Source/codes/Project+/Memory.asm
+	LA Variables Expansion and Additional Info System [Magus, DukeItOut]
+	Fighter Memory Expansion [Mawootad]
+	Character ID Fix 2.2 [spunit262, The Paprika Killer]
+Source/codes/Project+/TrainingMode.asm
+	[Project+] Training Mode Combo Meter Allows for techchasing and grabs [Eon]
+	[Project+] Z + Finish in Training Room Resets Match with default settings [Eon]
+	Random not at end of CSS doesnt crash Training Mode [Eon]
+Bit Variables Beyond 255 and Negative Offset Variables [Magus]
+Powershield Window Doesn't Decrement in Hitlag or 2x Rate in Guard [Magus]
+No Air Dodge in tumble [spunit262, Phantom Wings]
+Momentum Capture V4.3 [Phantom Wings, spunit262]
+Tripping Rate is 0 V2 [ds22, KirbyIsCool]
+Action 0x45 (hitstun) deadweight 'bump' angle 0x169 -> 0x16D [standardtoaster]
+Shield Break Minimum Disabled Time Fix [Magus]
+Powershield Reflect Sets Variable [Magus]
+Momentum Capture Data
+Triple Jump Glitch Fix [Phantom Wings, spunit262]
+[Project+] Character Ledge Unsnap fix [Fracture]
+[Project+] Customizable Attacker Hitlag Modifier [DukeItOut]
+Knockback during Timer Slo-mo is also slowed down v2.0 [Eon]
+Slow-mo timer Continues even when Linked [Eon]
+[Project+] Throws Don't Trip on Grounded Banana 2.0 [Eon]
+[Project+] Floating Point Imprecision compensation for Collision tests v1.1 [Eon]
+[Project+] Faux Super Armour Port Priority Fix v1.1 [Eon]
+Expand Classic mode horde battle costume array [Eon]
+Spring Props don't set X position [DukeitOut]
+Change Subaction Pass Frame also Passes FSM v 1.1 [Eon]
+changeMaterialTex returns if getResTex returned a null pointer [Eon]
+Universal Walljumping [Dantarion]
+No Stale Moves
+Source/codes/ProjectM/Damage.asm
+	Store Hitbox Damage into Variables On Hit v1.2 [Magus]
+	Store Damage Absorbed into Variable [Magus]
+Source/codes/ProjectM/DirectionalInput.asm
+	Controller Input Lag Fix [Magus]
+Source/codes/ProjectM/Elements.asm
+	Light Element is 13, Luigi Green Fire is 15, & Water has GFX v1.2 [Magus]
+	Green Fire Thaws [ds22]
+	Luigi Fire is Green (1/2) [ds22]
+Source/codes/ProjectM/Grab.asm
+	Grab Release Speed-Ups [Standardtoaster]
+Source/codes/ProjectM/Knockback.asm
+	Subtractive Knockback Armor v1.1 [Magus]
+Source/codes/ProjectM/Ledge.asm
+	Ledge Grab Limit [Mawootad]
+Source/codes/ProjectM/Modifier/Reflect.asm
+	Powershield & Reflect Collision Modifier Engine V1.2a + SSE Exception[Magus]
+	Reflect Collision Multiplier Engine V2.1a [ds22]
+Pause Info Help Off by Default [ASF1nk]
+Tags in replays [Y.S]
+Timer Always Displays 6th Digit [ds22]
+Individual Stock Icons (info.pac) V2.7 PMEx + 50CC [ds22, wiiztec, DukeItOut, PyotrLuzhin, KingJigglypuff, SammiHusky]
+Lagless Character Selection [Magus]
+L/R menu speed modifier [Sammi Husky]
+Reverse Name Sort [Dantarion]
+Reset Tag when Unplugged [standardtoaster]
+Japanese character support in name maker [Dantarion, standardtoaster]
+Allow disabled names [standardtoaster]
+Existing Tag Usage [standardtoaster]
+CSS Cursor Speed [Dantarion]
+More Rules & Random Stage Switch are Selectable without Unlocking [Magus]
+All Stages Selectable on Random Stage Switch without Unlocking [Magus]
+All Target Smash Levels unlocked by default
+Use Custom CLR ID on Anchored GFX [Magus]
+[Legacy TE] Transforming Characters Switch Stocks [PyotrLuzhin]
+[Legacy TE] CSS keeps character choice for inactive ports between matches [Fracture]
+Melee Random v2 (CSS Expansion) [Sammi Husky]
+[Legacy TE] sc_selmap.pac can be 3 times larger because I said so V2 [DukeItOut]
+[Project+] 1-P Battles Don't Use Start Countdown [JOJI, DukeItOut]
+Salty Runback (Hold L+R+B to rematch instead of result screen) V2.5 (Minus Edition) [codes, ds22, Dantarion, Eon]
+Source/codes/ProjectM/CSS.asm
+	CSS Record Display Fix [ds22]
+	BrawlEX Hold Shield Rewrite v4 Clone Fix [codes, ChaseMcDizzle, HyperL!nk, PyotrLuzhin, ds22, Desi]
+Source/codes/ProjectM/SSSButtons.asm
+	Stage Striking & Page Switch (Requires Custom SSS) [Magus, InternetExplorer, DukeItOut]
+	L+R+A during Stage Select goes to CSS V2 (GC & CC) [ds22, Magus]
+	Spear Pillar Buttons Activated [Glitch]
+Source/codes/LegacyTE/AltCostume.asm
+	AltR/Z EX Fix [Desi]
+Source/codes/LegacyTE/Masquerade.asm
+	[Legacy TE] Masquerade Costume Flags V2 [ds22, DukeItOut]
+	[Legacy TE] Set Masquerade Costume Count to Zero to have up to 50 costumes v1.1 [DukeItOut]
+Source/codes/LegacyTE/TagsControls.asm
+	[Legacy TE] Holding L when new name at CSS goes to custom controls & back to CSS v1.21 [ChaseMcDizzle]
+	[Project+] X To toggle Rumble V1.2 (requires Fracture's Controls) [ChaseMcDizzle, Fracture, Yohan1044] 
+	[Project+] CSS Tags with Rumble are Coloured [Eon] 
+	[Legacy TE] Load Player Tags on Win Screen v2 [PyotrLuzhin]
+Source/codes/Project+/CSSCustomControls.asm
+Fighter Reflect SFX Modifier [Sammi Husky]
+Team Coloured Shields V2 [ds22]
+Team Colour Shade Check Fix (BrawlEx) [ds22, Sammi Husky]
+Team Colour Shade Modifier [ds22]
+SFX Survival -> Choose Your Character [Standardtoaster]
+SFX Fade Fix PMEXv0.5 [ds22, PyotrLuzhin]
+All Music Available without Unlocking [Magus]
+Locked Stage Music Fix [Magus]
+Source/codes/Project+/CSE.asm
+	[Project+] Custom Sound Engine v4.2 [Dantarion, PyotrLuzhin, DukeItOut]
+Source/codes/Project+/SFXExpand.asm
+	SFX and Music Setting Customizer [DukeItOut]
+	[Project+] SoundBank Expansion System (RSBE.Ver) (Kirby-cide fix + Voice clips volume fix + CSS Hiccup Fix + Mr. Resetti fix) v1.2 [codes, DukeItOut, JOJI]
+	Hitbox Sound Effect Change System v2.1 [Eon]
+	[Project+] Sawnd Pop Fix V2 [DukeItOut]
+	[Project+] Expansion sawnd characters are mute while metal [DukeItOut]
+Yoshi Eggs are Costume Based v1.1 [ds22] (char id fix fix)
+PT Pokemon Have Final Smashes & FS Characters Don't [ds22]
+Independent Pokemon Engine HTP, Classic & MMS [ds22]
+Independent Pokemon Save Data Engine + no wreck My Music v2 [spunit262]
+Unload PT Data [ds22]
+Samus Aerial Charge Shot Charging [ds22]
+ZSS Jumbo Screen Name Fix [ds22]
+[Project+] Roy Counter Fix [ds22] 
+[Project+] All-Star allows Giga Bowser to the next stage [DukeItOut]
+Game and Watch Chef Tweaks [Mawootad]
+Warioman Never Turn into Wario After Death [JOJI]
+Luigi ZA WARUDO Engine [PyotrLuzhin]
+PT Classic fix [ds22]
+PSA command 11210100 sets next GFX anim index [Eon]
+No Wiimote Character SFX [Sammi Husky]
+Yoshi Eggs don't despawn when Yoshi dies [Eon]
+Source/codes/Minus/Attributes.asm
+	On the Fly Attribute Modification (Item Crash Fix) [codes, Mawootad, DukeItOut]
+Source/codes/Project+/PokeTrainer.asm
+	[Project+] Solo Pokemon Trainer Pokemon (other PT Pokemon recognize independence) [DukeItOut, Eon]
+	Independent Pokemon for Subspace [Eon]
+Source/codes/Project+/Debug/modifiedDebug.asm
+	Source/codes/Project+/Debug/renderDebug.asm
+		Custom RenderDebug Call [Eon]
+		Frame Advance Convert [Eon]
+		drawQuadOutline [Eon]
+		drawLine3D [Eon]
+		DebugFileLoader [Eon]
+		renderDebug/[StageObject] [Eon]
+		renderDebug/[Yakumono] [Eon]
+	Source/codes/Project+/Debug/Hurtboxes Hitboxes.asm
+		renderDebug/[soCollisionAttackModuleImpl] [Eon]
+		renderDebug/[soCollisionHitModuleImpl]
+		Bubble Colour Modifiers
+	Source/codes/Project+/Debug/Capsule Renderer.asm
+		Draw Capsules/Spheres [Eon]
+		display/[clCapsule] [Eon] 
+		display/[clSphere] [Eon]
+	Source/codes/Project+/Debug/Stage Collisions.asm
+		renderDebug/[Stage] [Eon]
+		renderDebug/[grGimmick] [Eon]
+		renderDebug/[grCollisionManager] [Eon]
+		DrawCollision(SegmentData, CollisionData) [Eon]
+		Fully transparent Shapes are not attempted to be drawn [Eon]
+		clRectangle and gfAreaTriangle draws correct [Eon]
+	Source/codes/Project+/Debug/soGroundModule.asm
+		Collision Debug Function [Arthur, Eon] 
+		draw/[clRhombus2D] [Eon]
+		Draw ECB adjustments [Eon]
+		Draw Ledgegrab [Eon]
+		Draw Touching Planes [Eon]
+	Source/codes/Project+/Debug/gfSceneRoot.asm
+		renderDebug/[gfSceneRoot] [Eon]
+	Debug Start Input v1.2 [Magus, ???, Eon]
+	Debug On the Fly Character Switcher v1.4 (Knuckles added by Eon) [Magus, Krisan Thyme, Eon]
+	[Project+] Debug Controls v1.4 (Dolphin Fix v1.1) [Magus, ???, Eon] 
+	[Project+] Debug Camera, No HUD/Tags (Dolphin Fix v1.2) [Igglyboo, Link, Y.S, Phantom Wings, Magus, Eon]
+	Debug Body Collision State, Armor, and Hitstun Overlays v1.2 [Magus]
+[Legacy TE] Extra null pointer catch [Fracture]
+Grabboxes work out of any action [Eon]
+Source/codes/Project+/StageFiles.asm
+	Stage File System Neo [DukeItOut]
+	Stage Roster Expansion System v3.2 [Phantom Wings, DukeItOut]
+	[Legacy TE] Stage Modules Are Portable Without Modification V2 [DukeItOut]
+	Custom Stage SD File Loader [DukeItOut, Replay Fix by Kapedani]
+	If No Song Titles Are Found, Obtain Them From The TLST File [DukeItOut]
+	Source/Codes/Project+/MyMusic.asm
+		CMMCustom My Music V2 	 [JOJI, DukeItOut]
+		Enable Hanenbow in My Music [Desi]
+		[Legacy TE] My Music track frequency button shortcuts V2.1 (TLST file support) [Fracture, DukeItOut, Eon]
+		Force My Music's Menu slot to load its tracklist [DukeItOut]
+		Mushroomy Kingdom's slot only loads one tracklist [DukeItOut]
+		Hanenbow can display song titles, but stage builder stages can't [JOJI, DukeItOut]
+		Miscellaneous Music Customizer [DukeItOut]
+		CMM OptionSpecial Stages [JOJI]
+		CMM SD File Saver (Uses SD Root Code’s Directory) [Desi, Fracture, DukeItOut]
+		MyMusic loads from 8053F200 instead of 81521F18 [Desi]
+	Source/Codes/Project+/Random.asm
+		New SSS Random Code [DukeItOut]
+	[Legacy TE] Hold Y on Smashville to Guarantee a Concert V2 (requires ASL Helper and SFSN) [DukeItOut]
+	KK Concert Music Only Triggers Via TLST File [DukeItOut]
+	Metal Cavern and Online Training Room Can Use Custom Tracklists [DukeItOut]
+	SSSRESStage Selection Screen Roster Expansion System (RSBE.Ver) v1.2 [JOJI, DukeItOut]
+	Expansion Stages in All-Star Fix [DukeItOut]
+	Crush anywhere anytime [Eon] 
+	Crush effect in ef_StgBattleField outside of SSE [DukeItOut]
+	Stage Builder Can Not Save to Wii NAND [DukeItOut]
+	Universal Stage Camera Speed 2.0 [DukeItOut]
+	Custom Stage Select Screen V2 [Spunit, Phantom Wings, SOJ, Yohan1044, DukeItOut, JOJI]
+	Source/Codes/Minus/StageTable.asm
+		Stage Select Screen Table Data
+Source/codes/Project+/CustomRequirements.asm
+	Temporary Requirement ID Storage System [DukeItOut]
+	Extra Requirement Checks (Requires TRISS) [DukeItOut]
+Source/codes/Project+/CStick.asm
+	Smash attacks use special requirements instead of psa [Eon]
+	Smash shortcut requirement fixes [Eon]
+	[Project+] C-stick Functions Correctly During Crawl 3.0 [Eon]
+	Backwards Ftilts from jab to ftilt [Eon]
+	Backwards fsmash bug fix [Eon]
+	[Project+] C-Stick Debug Mode and Slow Mode fix v4.3 [Fracture, DukeItOut, Eon]
+	[Project+] Custom C-stick options [Eon]
+	[Project+] C-stick mushing Fix [Eon]
+	[Project+] C-Stick throws 2.0 [Eon, Dantarion, standardtoaster]
+	Cstick Neutral range = Cstick input range [Eon]
+Source/codes/Project+/UCF.asm
+Source/codes/Project+/PSA.asm
+	[Project+] RCO Airspeed Fix v1.2 [Eon]
+	C-Stick Buffer Jump U-Smash Fix [Magus]
+Source/codes/ProjectM/PSA/Effects.asm
+	Luigi Fire is Green V1.2 (Minus) (2/2) [ds22]
+	Warioman Fart Overlay is Purple [ds22, Magus]
+Source/codes/ProjectM/PSA/Misc.asm
+	Footstool Action Exit Clears Auto-Footstool Bit [ds22]
+	Rebound Now has SFX [Shanus, Standardtoaster]
+	Body Collisions Only Apply When Thrown v1.2 [Shanus, DukeItOut]
+	Dash Cancel v3.0 [Yeroc]
+	WallJumps Require Smash Input Away Only and 0.8 Sensitivity, and WallCling is 0.945 [Magus, Shanus]
+	Monkey Flip DamageFace Fix [ds22]
+	Respawn Camera Zoom Refocus [ds22]
+	Remove Dead Frame from Jump [Shanus]
+	Shield during Dash 2.0 [Yeroc]
+Source/codes/ProjectM/PSA/PowerShield.asm
+	[Minus] Powershield Parry [Mawootad]
+	No Powershield Buffering and Powershield Reflect v4.1 [Shanus, Magus]
+	Powershield Drop Allows Shield & Powershield SFX [Magus]
+Source/codes/ProjectM/PSA/Glide.asm
+	No special fall after glide attack [Standardtoaster]
+Source/codes/ProjectM/PSA/Edge.asm
+	Ledgehang Duration [Yeroc]
+Source/codes/Project+/Moonwalk.asm
+Source/codes/Minus/PSA.asm
+	Global Attribute Modifications [Mawootad]
+	C-Stick Fastfalls Modifier [Phantom Wings, spunit262]
+	Ledgecancelling v1.1[Yeroc, Shanus]
+	Fastfall During Tumble v2.2 [spunit262, Phantom Wings]
+	Press Shield to Allow Swap V1.1
+	Limited Specials [Mawootad]
+	Custom Hitbox Effects [Mawootad]
+	Buffered Dashes [Mawootad]
+	Footstool with only Taunt [Magus]
+	Spawn Items with Cosutmes [Sammi-Husky]
+Source/codes/Minus/Wiimmfi.asm
+	wiimmfi patch v2.1.1 [diddy kong, doqtor kirby]
+Source/codes/Minus/Engine.asm
+	Tech Window v.10
+	Left-Facing Crawl Momentum Fix [Sammi Husky]
+	Load common rels from module folder [Sammi Husky]
+	Minus Shadow Ball Behavior + FThrow Fixes v3 [PyotrLuzhin, Sammi Husky]
+Source/codes/Minus/Constants.asm
+	2002 - Hitstun Constant [0.4->0.5]
+	2032 - Minimum KB needed for trip [55 -> 999999]
+	3237 - Shield Degeneration [0.28->0.16]
+	3242 - Shield Stun 1 [1.15->2.0]
+	3243 - Shield Stun 2 [2.0->5.5]
+	3245 - Maximum Shield Pushback [1.6->0.5]
+	3256 - Franklin Badge Reflected Damage Multiplier [1.3->0.75]
+	3257 - Franklin Badge Reflected Speed Multiplier [1.3->1.0]
+	3273 - Weight Dependant throw max [2.0->1]
+	3274 - Weight Dependant throw min [0.5->1]
+	3340 - Frozen Damage Multiplier [0.5->0.75]
+	3341 - Frozen Knockback Multiplier [0.25->0.725]
+	3340 - Frozen Gravity Multiplier [0.03->0.0488]
+	3347 - Freeze Time Reduced Per Input [4->6]
+	3430 - Yoshi egg lay velocity [2.2->0]
+	3431 - Yoshi egg damage multiplier [.5->1]
+	3440 - Yoshi egg break velocity [2.4->0]
+	3485 - Metal Box HP [50->35]
+	23032 - Dash Dance Window [6->12]
+	23051 - Ledge Invincibility [23->20]
+	23078 - Powershield Window [4(3)->3(2)]
+	23079 - Powershield Drop Window to be Interruptible [4->5]
+	23088 - Aerial Attack Hitstun Interrupt Frame [26->1]
+	23123 - Yoshi Egg Lay Invincibility [14->0]
+Source/codes/Minus/Teams.asm
+	Smash 4 Style Team Battles v3 [PyotrLuzhin]
+	Second Teams option [PyotrLuzhin, Fracture, Yohan1044]
+	Reset Teams on re-enter CSS [Eon]
+	Assign Teams randomises colour & order [Eon]
+Source/codes/Minus/Variables.asm
+	Custom IC-Variable Engine [Eon]
+	Timestamp at IC-Basic[30000] [Eon]
+Source/codes/Minus/Requirements.asm
+	Custom Requirements v1.5 (Minus) [Magus, Sammi Husky]
+Source/codes/Extras/Netplay.asm
+	[Project+] Move v-sync call for Brawl/PM [hannesmann, Dan Salvato, Achilles]
+	Fixed OSReport Syntax on File Reading [DukeItOut]
+Source/codes/Extras/More.asm
+	Source/codes/Extras/AllStar.asm
+		All-Star Rest Area Stock Display Cap[Desi]
+	Source/codes/Extras/Angle.asm
+		Angle 0x200/0x202 and 0x201/0x203 are inwards and outwards sending autolinks, 0x202 and 0x203 are based on distance from centre and users speed [Eon, SammiHusky]
+		Hitbox Object Passed as extra Arg to getDamageAngle [Eon] 
+	Source/codes/Extras/CustomEnding.asm
+		CheckModFileSD function [DukeItOut]
+		Custom Ending Videos in Classic/All-Star [DukeItOut]
+		BrawlEx Classic/All-Star Configurable Ending Skip [Desi, DukeItOut]
+	Source/codes/Extras/Maths.asm
+		New Work Module Command Table [Eon]
+		Sin, Cos, aSin, aCos and aTan2 on Work Module 50, 51, 52, 53 and 54 [Eon]
+	Source/codes/Extras/SoundbankFix.asm
+		Manual Clone Soundbank Unload Fix + Macro [codes, ds22, Desi]
+	Source/codes/Extras/VariableParameter.asm
+		Move Hitbox And Hitbox Decleration allow Size and position to be specified with a variable [Eon]
+		Graphic effects accept variable arguments for rotation and rand elements [Eon]
+	Source/codes/Extras/ShortHopMacro.asm
+	Pointer Wizardry v1.1 [Eon]
+	BrawlEx Clone Engine v2.0.0.0 Subspace Fix (RSBE.Ver) [JOJI]
+	Clear Specific Transition Term Group PSA Command [Eon]
+	Falco can use his own final smash files [DukeItOut]
+	Crush anywhere anytime [Eon]
+	Null GroundModule makes rayCheckTarget return false [Eon]
+	ecTrace render Fix [MarioDox]
+	Final Smash Music Fix [JOJI]
+Source/codes/Project+/EffectCommands.asm
+	PSA command 11210X00 sets next GFX anim index [Eon, DukeItOut]
+Source/codes/Project+/YoshiEggs.asm
+	Yoshi Eggs are Costume Based v1.2β [ds22] 
+	[Project+] Yoshi's eggshell particles are Colored [DukeItOut]
+	[Project+] Yoshi's Egg break out intang 14 > 9 [Fracture]
+	Yoshi Eggs don't despawn when Yoshi dies [Eon]
+	[Project+] Egged Damage Multiplier (0.5x -> 0.75x) [DukeItOut]
+Source/codes/Extras/Unlocks.asm
+	All Characters Unlock Checks Are Unlocked [Kapedani]
+	All Target Smash Levels are Unlocked [Kapedani]
+	More Rules & Random Stage Switch are Selectable without Unlocking [Magus]
+	All Stages Selectable on Random Stage Switch without Unlocking [Magus]
+	All-Star Mode is Selectable without Unlocking [Spigel]
+	Boss Battles Mode is Selectable without Unlocking [Spigel]

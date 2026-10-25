@@ -8,23 +8,28 @@ Super Smash Bros. Melee and Super Smash Bros. assets developed by HAL Laboratory
 ## Current Developers
 | Name           | Joined | Roles  |
 | :------------- | :----- | :----- |
-| Pin Clock      | 2012   | Leader, Graphics, Playtesting, Costumes, PSA, Social Media, Video Editing |
-| Sammi Husky    | 2014   | Leader, Coding, PSA, GFX |
-| Glitch         | 2011   | Coding, Website |
-| Fudgepop01     | 2022   | Coding, AI  | 
-| Eon            | 2022   | Coding, PSA |
-| Kapedani       | 2022   | Coding |
-| Maye           | 2017   | PSA, Social media, Video Editing |
-| KingJigglyPuff | ----   | PSA |
-| Survivian      | 2017   | Animation, Website |
-| Axellion       | 2023   | Animation, PSA |
-| Crystal Hakurei| ----   | Balance Lead |
-| Fivavoa        | ----   | Balance |
-| K9             | ----   | Balance |
-| Prismoid       | ----   | Balance |
-| Jiffy          | ----   | Audio, Balance |
-| Lutte          | ----   | Balance |
-| FantasyFox     | 2023   | Animations, Balance |
+| Pin Clock      | 2012   | Leader, Art Lead, Graphics, Costumes, Video Editing, Media |
+| EpicNonBread   | 2018   | Leader, Design Lead, Playtesting Lead, PSA, Infrastructure, Media |
+| Fivavoa        | 2023   | Team Relations Lead, Art, Balance, Media |
+| Glitch         | 2011   | Coding, Website, Infrastructure |
+| Fudgepop01     | 2022   | Coding, AI | 
+| Kapedani       | 2022   | Coding, Stages |
+| Cahalan        | 2016*  | Costumes, Audio |
+| iwantgames     | 2022   | Models, Costumes |
+| Maye           | 2017   | PSA, Graphics, Video Editing, Media |
+| KingJigglyPuff | 2014   | PSA |
+| Survivian      | 2017   | Website, Media |
+| Crystal Hakurei| 2023   | Balance |
+| Prismoid       | 2023   | Balance |
+| Niagara        | 2025   | Balance |
+| FantasyFox     | 2022   | Animation, Balance, Media |
+| Axellion       | 2022   | Animation, PSA, GFX, Media |
+| Happymilla     | 2022   | Animation |
+| Jiffy          | 2023   | Audio |
+| Numbreon       | 2025   | Graphics, Playtesting |
+| Darxmarx       | 2023   | Playtesting |
+| Zug            | 2023   | Playtesting |
+
 
 ## Inactive / Retired
 | Name        | Tenure | Roles  |
@@ -35,6 +40,7 @@ Super Smash Bros. Melee and Super Smash Bros. assets developed by HAL Laboratory
 | Kirk        | 2009* - unknown | PSA, Leader |
 | ThundaMoo   | 2010* - Unknown | Leader, PSA |
 | Numbuh214   | 2009* | Leader, PSA |
+| Sammi Husky    | 2014 - 2024  | Leader, Coding, Infrastructure, PSA, GFX |
 | standardtoaster| 2009* - unknown | Coding|
 | Linkshot     | 2010 - unknown | PSA? |
 | Xyless      | 2009* - unknown | Graphics |
@@ -60,20 +66,21 @@ Super Smash Bros. Melee and Super Smash Bros. assets developed by HAL Laboratory
 | Aries (Kagemaru)| ---- | Animation |
 | Glyphmoney (Duke Battledrive) | 2014 | Playtesting |
 | Muggshotter | 2015 | Video Editing |
-| EpicNonBread   | 2018 - 2022   | PSA, Balance |
 | wiiztec        | 2022   | Coding |
-| Neville        | 2017   | PSA |
-| ThePwnzr       | 2017   | PSA |
-| iwantgames     | 2022   | Models & Costumes |
-| Happymilla     | 2022   | Animation |
-| Nezha          | 2022 - 2023   | Stages |
+| Sente          | 2017   | PSA |
+| mitzutsune (Pwnzr)       | 2017   | PSA |
+| Lutte          | 2023   | Balance |
+| K9             | 2023   | Balance |
+| Nezha          | 2022* - 2023   | Stages |
+| Grand Azel     | 2023   | Graphics |
+| Eon            | 2022-2025   | Coding, PSA |
 
 
 ## Other Noteworthy Contributions
 | Name        | Affiliations  | Contributions |
 | :---------- | :------------ | :------------ |
-| Project+    | Project+ Team | Codes, tools, overall contributions to Brawl Modding |
-| PMBR (PMDT) | ProjectM Team | Mewtwo model, Codes, Overall contributions to brawl modding |
+| Project+    | Project+ Team | Codes, tools, overall contributions to Brawl modding |
+| PMBR (PMDT) | ProjectM Team | Mewtwo model, Codes, Overall contributions to Brawl modding |
 | Chaotrope   | N/A           | Main Theme Composition |
 | Glitch      | Brawl- Team   | MinimaLauncher / Minus Launcher |
 
@@ -400,7 +407,7 @@ Super Smash Bros. Melee and Super Smash Bros. assets developed by HAL Laboratory
 
 #### SUBSPACE
  - Base - SLuigi
- - R (Tabuu's Domain) - Kapedani
+ - R (Tabuu's Domain) - Kapedani, with additional fixes by MarioDox
 
 #### GYROMITE
  - Base - Fruiter, Kapedani, Yorch, Redipisthecooler

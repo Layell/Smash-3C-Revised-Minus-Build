@@ -1,6 +1,6 @@
 This is the Smash 3C Version of Brawl Minus
 
-Current Version: v5.1.0
+Current Version: 5.1.5
 
 Some additional Notes:
 
@@ -11,6 +11,8 @@ Known Issues:
 -Fighter Kirby and Cowboy Kirby may have clipping on some ability hats as hat bone implementation is not part of Brawl-
 
 -Some expanded costumes may not have additional effects on certain animations such as ROB and Sonic
+
+-Lucario's extra costumes may have stiff accessories as not all animations were adjusted
 
 If you are aware of any other issues, please report them to the Smash 3C server, however be sure to check it's not an existing Brawl- issue. I cannot promise any issues will be resolved.
 
